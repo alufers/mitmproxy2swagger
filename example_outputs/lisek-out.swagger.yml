@@ -1,0 +1,2398 @@
+openapi: 3.0.0
+info:
+  title: flows/flows_lisek_filtered Mitmproxy2Swagger
+  version: 1.0.0
+servers:
+- url: https://api2.lisek.app/api
+  description: The default server
+paths:
+  /mobileversion:
+    get:
+      summary: GET mobileversion
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        platform:
+                          type: string
+                        minVersion:
+                          type: string
+                        appCode:
+                          type: string
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+  /darkstores:
+    get:
+      summary: GET darkstores
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                        identifier:
+                          type: string
+                        virtual:
+                          type: boolean
+                        address:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                            street:
+                              type: string
+                            streetNo:
+                              type: string
+                            city:
+                              type: string
+                            doorNo:
+                              type: string
+                            floor:
+                              type: string
+                            latitude:
+                              type: number
+                            longitude:
+                              type: number
+                            postalCode:
+                              type: string
+                            porch:
+                              type: string
+                            comments:
+                              type: string
+                            courierComment:
+                              type: string
+                            isCurrent:
+                              type: boolean
+                            isCurrentNotVirtual:
+                              type: boolean
+                            label:
+                              type: object
+                            isVirtual:
+                              type: boolean
+                        area:
+                          type: array
+                          items:
+                            type: string
+                        openingTime:
+                          type: object
+                          properties:
+                            openHour:
+                              type: number
+                            openMinute:
+                              type: number
+                            closeHour:
+                              type: number
+                            closeMinute:
+                              type: number
+                        courierSplitEnabled:
+                          type: boolean
+                        sortKey:
+                          type: number
+                        sliderId:
+                          type: number
+                        available:
+                          type: boolean
+                        unavailableMessage:
+                          type: string
+                        unavailableUntilTime:
+                          type: object
+                        orderStackingEnabled:
+                          type: string
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+  /users/login:
+    post:
+      summary: POST login
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                      refreshToken:
+                        type: string
+                      expires:
+                        type: number
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          email:
+                            type: string
+                          firstname:
+                            type: string
+                          lastname:
+                            type: string
+                          phone:
+                            type: string
+                          newsletter:
+                            type: boolean
+                          sendInfo:
+                            type: boolean
+                          roles:
+                            type: array
+                            items:
+                              type: string
+                          franchises:
+                            type: array
+                            items: {}
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Token:
+                  type: string
+                GrantType:
+                  type: string
+  /darkstores/{id}:
+    get:
+      summary: GET darkstores by id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        area:
+                          type: string
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  /users/profile:
+    get:
+      summary: GET profile
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: object
+                    properties:
+                      firstName:
+                        type: string
+                      lastName:
+                        type: string
+                      phone:
+                        type: string
+                      dateOfBirth:
+                        type: string
+                      email:
+                        type: string
+                      newsletter:
+                        type: boolean
+                      sendInfo:
+                        type: boolean
+                      smsCode:
+                        type: object
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+  /addresses:
+    get:
+      summary: GET addresses
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items: {}
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+  /favourites:
+    get:
+      summary: GET favourites
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items: {}
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+  /basket/setlocation:
+    post:
+      summary: POST setlocation
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      userId:
+                        type: number
+                      addressId:
+                        type: object
+                      address:
+                        type: object
+                      darkstoreId:
+                        type: number
+                      items:
+                        type: array
+                        items: {}
+                      coupons:
+                        type: array
+                        items: {}
+                      itemTotal:
+                        type: number
+                      total:
+                        type: number
+                      delivery:
+                        type: number
+                      standardDeliveryCost:
+                        type: number
+                      freeShippingThreshold:
+                        type: number
+                      discountThreshold:
+                        type: number
+                      discountValue:
+                        type: number
+                      discountDelivery:
+                        type: number
+                      discountFromCrossingThreshold:
+                        type: number
+                      totalForThresholdDiscount:
+                        type: number
+                      totalForFreeShipping:
+                        type: number
+                      totalWithoutDiscount:
+                        type: number
+                      isDiscountThresholdCrossed:
+                        type: boolean
+                      isFreeShipping:
+                        type: boolean
+                      paperBagFee:
+                        type: number
+                      checkoutTrialDate:
+                        type: object
+                      insufficientStock:
+                        type: boolean
+                      totalWeight:
+                        type: number
+                      isBanned:
+                        type: boolean
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                latitude:
+                  type: number
+                longitude:
+                  type: number
+  /darkstores/{lat}/{lon}:
+    get:
+      summary: GET darkstores by lat
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      name:
+                        type: string
+                      identifier:
+                        type: string
+                      virtual:
+                        type: boolean
+                      address:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          street:
+                            type: string
+                          streetNo:
+                            type: string
+                          city:
+                            type: string
+                          doorNo:
+                            type: string
+                          floor:
+                            type: string
+                          latitude:
+                            type: number
+                          longitude:
+                            type: number
+                          postalCode:
+                            type: string
+                          porch:
+                            type: string
+                          comments:
+                            type: object
+                          courierComment:
+                            type: object
+                          isCurrent:
+                            type: boolean
+                          isCurrentNotVirtual:
+                            type: boolean
+                          label:
+                            type: object
+                          isVirtual:
+                            type: boolean
+                      area:
+                        type: object
+                      openingTime:
+                        type: object
+                        properties:
+                          openHour:
+                            type: number
+                          openMinute:
+                            type: number
+                          closeHour:
+                            type: number
+                          closeMinute:
+                            type: number
+                      courierSplitEnabled:
+                        type: boolean
+                      sortKey:
+                        type: number
+                      sliderId:
+                        type: number
+                      available:
+                        type: boolean
+                      unavailableMessage:
+                        type: string
+                      unavailableUntilTime:
+                        type: object
+                      orderStackingEnabled:
+                        type: string
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      parameters:
+      - name: lat
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: lon
+        in: path
+        required: true
+        schema:
+          type: string
+  /transactionsettings:
+    get:
+      summary: GET transactionsettings
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: object
+                    properties:
+                      discountThreshold:
+                        type: number
+                      maxWeight:
+                        type: number
+                      minOrder:
+                        type: number
+                      freeShippingThreshold:
+                        type: number
+                      deliveryCost:
+                        type: number
+                      discountPercent:
+                        type: number
+                      maxStackSize:
+                        type: number
+                      maxStackTimeInMins:
+                        type: number
+                      startStackFromClosest:
+                        type: boolean
+                      paperBagEan:
+                        type: string
+                      paperBagFee:
+                        type: number
+                      paperBagPerXItems:
+                        type: number
+                      paperBagPerXPrice:
+                        type: object
+                      paperBagInfiniteStock:
+                        type: boolean
+                      alcoholCategories:
+                        type: string
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+  /inventory/{id}/full:
+    get:
+      summary: GET full by id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        key:
+                          type: string
+                        number:
+                          type: number
+                        order:
+                          type: number
+                        imagePath:
+                          type: string
+                        iconPath:
+                          type: object
+                        parentId:
+                          type: object
+                        alcohol:
+                          type: boolean
+                        backgroundColor:
+                          type: string
+                        subCategories:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                              key:
+                                type: object
+                              number:
+                                type: number
+                              order:
+                                type: number
+                              imagePath:
+                                type: string
+                              iconPath:
+                                type: object
+                              parentId:
+                                type: number
+                              alcohol:
+                                type: boolean
+                              backgroundColor:
+                                type: string
+                              subCategories:
+                                type: array
+                                items: {}
+                              products:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    quantity:
+                                      type: number
+                                    ean:
+                                      type: string
+                                    maxQuantity:
+                                      type: number
+                                    headline:
+                                      type: string
+                                    title:
+                                      type: string
+                                    subTitle:
+                                      type: string
+                                    price:
+                                      type: number
+                                    packInfo:
+                                      type: string
+                                    imagePath:
+                                      type: string
+                                    isHit:
+                                      type: boolean
+                                    isPromo:
+                                      type: boolean
+                                    priceBeforePromo:
+                                      type: object
+                                    promoText:
+                                      type: string
+                                    isNew:
+                                      type: boolean
+                                    isCold:
+                                      type: boolean
+                                    showOutOfStock:
+                                      type: boolean
+                                    weight:
+                                      type: string
+                                    vat:
+                                      type: number
+                                    categoryId:
+                                      type: number
+                                    subCategoryId:
+                                      type: object
+                                    subCategoryName:
+                                      type: object
+                                    id:
+                                      type: number
+                              id:
+                                type: number
+                        products:
+                          type: array
+                          items: {}
+                        id:
+                          type: number
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+  /inventory/{id}/stocks:
+    get:
+      summary: GET stocks by id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        e:
+                          type: string
+                        q:
+                          type: number
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+  /sliders/{id}:
+    get:
+      summary: GET sliders by id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        link:
+                          type: string
+                        type:
+                          type: number
+                        position:
+                          type: number
+                        categoryId:
+                          type: object
+                        mainCategoryId:
+                          type: object
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+  /push:
+    post:
+      summary: POST push
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                platform:
+                  type: string
+                appVersion:
+                  type: string
+  /inventory/promo/{id}:
+    get:
+      summary: GET promo by id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ean:
+                          type: string
+                        type:
+                          type: string
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+  /users-sms/code:
+    post:
+      summary: POST code
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  type: string
+  /users-sms/login:
+    post:
+      summary: POST login
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                      refreshToken:
+                        type: string
+                      expires:
+                        type: number
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          email:
+                            type: string
+                          firstname:
+                            type: string
+                          lastname:
+                            type: string
+                          phone:
+                            type: string
+                          newsletter:
+                            type: boolean
+                          sendInfo:
+                            type: boolean
+                          roles:
+                            type: array
+                            items:
+                              type: string
+                          franchises:
+                            type: array
+                            items: {}
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  type: string
+                code:
+                  type: string
+  /orders/user/{id}/{id1}/{id2}:
+    get:
+      summary: GET user by id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: object
+                    properties:
+                      page:
+                        type: number
+                      pageSize:
+                        type: number
+                      count:
+                        type: number
+                      items:
+                        type: array
+                        items: {}
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+      - name: id1
+        in: path
+        required: true
+        schema:
+          type: number
+      - name: id2
+        in: path
+        required: true
+        schema:
+          type: number
+      - name: active
+        in: query
+        required: false
+        schema:
+          type: string
+  /basket/setaddress/{id}:
+    post:
+      summary: POST setaddress by id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      userId:
+                        type: number
+                      addressId:
+                        type: number
+                      address:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          street:
+                            type: string
+                          streetNo:
+                            type: string
+                          city:
+                            type: string
+                          doorNo:
+                            type: string
+                          floor:
+                            type: string
+                          latitude:
+                            type: number
+                          longitude:
+                            type: number
+                          postalCode:
+                            type: string
+                          porch:
+                            type: object
+                          comments:
+                            type: string
+                          courierComment:
+                            type: object
+                          isCurrent:
+                            type: boolean
+                          isCurrentNotVirtual:
+                            type: boolean
+                          label:
+                            type: object
+                          isVirtual:
+                            type: boolean
+                      darkstoreId:
+                        type: number
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            ean:
+                              type: string
+                            title:
+                              type: string
+                            subtitle:
+                              type: string
+                            imagePath:
+                              type: string
+                            quantity:
+                              type: number
+                            quantityAvailable:
+                              type: number
+                            price:
+                              type: number
+                            insufficientStock:
+                              type: boolean
+                            stockItemId:
+                              type: number
+                            vat:
+                              type: number
+                            weight:
+                              type: number
+                            maxQuantity:
+                              type: number
+                            isRemovable:
+                              type: boolean
+                            isExcludedFromDiscount:
+                              type: boolean
+                            isFreebie:
+                              type: boolean
+                            id:
+                              type: number
+                      coupons:
+                        type: array
+                        items: {}
+                      itemTotal:
+                        type: number
+                      total:
+                        type: number
+                      delivery:
+                        type: number
+                      standardDeliveryCost:
+                        type: number
+                      freeShippingThreshold:
+                        type: number
+                      discountThreshold:
+                        type: number
+                      discountValue:
+                        type: number
+                      discountDelivery:
+                        type: number
+                      discountFromCrossingThreshold:
+                        type: number
+                      totalForThresholdDiscount:
+                        type: number
+                      totalForFreeShipping:
+                        type: number
+                      totalWithoutDiscount:
+                        type: number
+                      isDiscountThresholdCrossed:
+                        type: boolean
+                      isFreeShipping:
+                        type: boolean
+                      paperBagFee:
+                        type: number
+                      checkoutTrialDate:
+                        type: object
+                      insufficientStock:
+                        type: boolean
+                      totalWeight:
+                        type: number
+                      isBanned:
+                        type: boolean
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+  /basket/add:
+    post:
+      summary: POST basket add
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      userId:
+                        type: number
+                      addressId:
+                        type: number
+                      address:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          street:
+                            type: string
+                          streetNo:
+                            type: string
+                          city:
+                            type: string
+                          doorNo:
+                            type: string
+                          floor:
+                            type: string
+                          latitude:
+                            type: number
+                          longitude:
+                            type: number
+                          postalCode:
+                            type: string
+                          porch:
+                            type: object
+                          comments:
+                            type: string
+                          courierComment:
+                            type: object
+                          isCurrent:
+                            type: boolean
+                          isCurrentNotVirtual:
+                            type: boolean
+                          label:
+                            type: object
+                          isVirtual:
+                            type: boolean
+                      darkstoreId:
+                        type: number
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            ean:
+                              type: string
+                            title:
+                              type: string
+                            subtitle:
+                              type: string
+                            imagePath:
+                              type: string
+                            quantity:
+                              type: number
+                            quantityAvailable:
+                              type: number
+                            price:
+                              type: number
+                            insufficientStock:
+                              type: boolean
+                            stockItemId:
+                              type: number
+                            vat:
+                              type: number
+                            weight:
+                              type: number
+                            maxQuantity:
+                              type: number
+                            isRemovable:
+                              type: boolean
+                            isExcludedFromDiscount:
+                              type: boolean
+                            isFreebie:
+                              type: boolean
+                            id:
+                              type: number
+                      coupons:
+                        type: array
+                        items: {}
+                      itemTotal:
+                        type: number
+                      total:
+                        type: number
+                      delivery:
+                        type: number
+                      standardDeliveryCost:
+                        type: number
+                      freeShippingThreshold:
+                        type: number
+                      discountThreshold:
+                        type: number
+                      discountValue:
+                        type: number
+                      discountDelivery:
+                        type: number
+                      discountFromCrossingThreshold:
+                        type: number
+                      totalForThresholdDiscount:
+                        type: number
+                      totalForFreeShipping:
+                        type: number
+                      totalWithoutDiscount:
+                        type: number
+                      isDiscountThresholdCrossed:
+                        type: boolean
+                      isFreeShipping:
+                        type: boolean
+                      paperBagFee:
+                        type: number
+                      checkoutTrialDate:
+                        type: object
+                      insufficientStock:
+                        type: boolean
+                      totalWeight:
+                        type: number
+                      isBanned:
+                        type: boolean
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ean:
+                  type: string
+                quantity:
+                  type: number
+  /basket/remove:
+    post:
+      summary: POST remove
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      userId:
+                        type: number
+                      addressId:
+                        type: number
+                      address:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          street:
+                            type: string
+                          streetNo:
+                            type: string
+                          city:
+                            type: string
+                          doorNo:
+                            type: string
+                          floor:
+                            type: string
+                          latitude:
+                            type: number
+                          longitude:
+                            type: number
+                          postalCode:
+                            type: string
+                          porch:
+                            type: object
+                          comments:
+                            type: string
+                          courierComment:
+                            type: object
+                          isCurrent:
+                            type: boolean
+                          isCurrentNotVirtual:
+                            type: boolean
+                          label:
+                            type: object
+                          isVirtual:
+                            type: boolean
+                      darkstoreId:
+                        type: number
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            ean:
+                              type: string
+                            title:
+                              type: string
+                            subtitle:
+                              type: string
+                            imagePath:
+                              type: string
+                            quantity:
+                              type: number
+                            quantityAvailable:
+                              type: number
+                            price:
+                              type: number
+                            insufficientStock:
+                              type: boolean
+                            stockItemId:
+                              type: number
+                            vat:
+                              type: number
+                            weight:
+                              type: number
+                            maxQuantity:
+                              type: number
+                            isRemovable:
+                              type: boolean
+                            isExcludedFromDiscount:
+                              type: boolean
+                            isFreebie:
+                              type: boolean
+                            id:
+                              type: number
+                      coupons:
+                        type: array
+                        items: {}
+                      itemTotal:
+                        type: number
+                      total:
+                        type: number
+                      delivery:
+                        type: number
+                      standardDeliveryCost:
+                        type: number
+                      freeShippingThreshold:
+                        type: number
+                      discountThreshold:
+                        type: number
+                      discountValue:
+                        type: number
+                      discountDelivery:
+                        type: number
+                      discountFromCrossingThreshold:
+                        type: number
+                      totalForThresholdDiscount:
+                        type: number
+                      totalForFreeShipping:
+                        type: number
+                      totalWithoutDiscount:
+                        type: number
+                      isDiscountThresholdCrossed:
+                        type: boolean
+                      isFreeShipping:
+                        type: boolean
+                      paperBagFee:
+                        type: number
+                      checkoutTrialDate:
+                        type: object
+                      insufficientStock:
+                        type: boolean
+                      totalWeight:
+                        type: number
+                      isBanned:
+                        type: boolean
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      parameters:
+      - name: basketItemId
+        in: query
+        required: false
+        schema:
+          type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ean:
+                  type: string
+                quantity:
+                  type: number
+  /basket/checkouts:
+    post:
+      summary: POST checkouts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: object
+                    properties:
+                      estimatedWaitTimeInMinutes:
+                        type: object
+                      canDeliver:
+                        type: boolean
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+  /v1/ordertips:
+    get:
+      summary: GET ordertips
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      type: number
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+  /payu/methods:
+    get:
+      summary: GET methods
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: object
+                    properties:
+                      payByLinks:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                            name:
+                              type: string
+                            brandImageUrl:
+                              type: string
+                            status:
+                              type: string
+                            minAmount:
+                              type: number
+                            maxAmount:
+                              type: number
+                      cardTokens:
+                        type: array
+                        items: {}
+                      pexTokens:
+                        type: array
+                        items: {}
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      parameters:
+      - name: extended
+        in: query
+        required: false
+        schema:
+          type: number
+  /coupons:
+    get:
+      summary: GET coupons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items: {}
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+  /scheduleslots/{id}:
+    get:
+      summary: GET scheduleslots by id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        date:
+                          type: number
+                        hour:
+                          type: number
+                        minutes:
+                          type: number
+                        status:
+                          type: string
+                        size:
+                          type: number
+                        free:
+                          type: number
+                        configurationId:
+                          type: number
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+  /coupons/activate/{promocode}:
+    post:
+      summary: POST coupons activate by promocode
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: object
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        message:
+                          type: string
+                        translateKey:
+                          type: string
+      parameters:
+      - name: promocode
+        in: path
+        required: true
+        schema:
+          type: string
+  /basket/coupons/attach/{id}:
+    post:
+      summary: POST coupons attach by id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      userId:
+                        type: number
+                      addressId:
+                        type: number
+                      address:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          street:
+                            type: string
+                          streetNo:
+                            type: string
+                          city:
+                            type: string
+                          doorNo:
+                            type: string
+                          floor:
+                            type: string
+                          latitude:
+                            type: number
+                          longitude:
+                            type: number
+                          postalCode:
+                            type: string
+                          porch:
+                            type: object
+                          comments:
+                            type: string
+                          courierComment:
+                            type: object
+                          isCurrent:
+                            type: boolean
+                          isCurrentNotVirtual:
+                            type: boolean
+                          label:
+                            type: object
+                          isVirtual:
+                            type: boolean
+                      darkstoreId:
+                        type: number
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            ean:
+                              type: string
+                            title:
+                              type: string
+                            subtitle:
+                              type: string
+                            imagePath:
+                              type: string
+                            quantity:
+                              type: number
+                            quantityAvailable:
+                              type: number
+                            price:
+                              type: number
+                            insufficientStock:
+                              type: boolean
+                            stockItemId:
+                              type: number
+                            vat:
+                              type: number
+                            weight:
+                              type: number
+                            maxQuantity:
+                              type: number
+                            isRemovable:
+                              type: boolean
+                            isExcludedFromDiscount:
+                              type: boolean
+                            isFreebie:
+                              type: boolean
+                            id:
+                              type: number
+                      coupons:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                            name:
+                              type: string
+                            display:
+                              type: string
+                            description:
+                              type: string
+                            validTill:
+                              type: string
+                            validFrom:
+                              type: string
+                            freeShipping:
+                              type: boolean
+                            noPaperBags:
+                              type: boolean
+                            fixedDiscount:
+                              type: number
+                            percentDiscount:
+                              type: number
+                            referal:
+                              type: boolean
+                            gift:
+                              type: boolean
+                            valid:
+                              type: object
+                            minOrderValue:
+                              type: number
+                            calculatedDiscount:
+                              type: object
+                      itemTotal:
+                        type: number
+                      total:
+                        type: number
+                      delivery:
+                        type: number
+                      standardDeliveryCost:
+                        type: number
+                      freeShippingThreshold:
+                        type: number
+                      discountThreshold:
+                        type: number
+                      discountValue:
+                        type: number
+                      discountDelivery:
+                        type: number
+                      discountFromCrossingThreshold:
+                        type: number
+                      totalForThresholdDiscount:
+                        type: number
+                      totalForFreeShipping:
+                        type: number
+                      totalWithoutDiscount:
+                        type: number
+                      isDiscountThresholdCrossed:
+                        type: boolean
+                      isFreeShipping:
+                        type: boolean
+                      paperBagFee:
+                        type: number
+                      checkoutTrialDate:
+                        type: object
+                      insufficientStock:
+                        type: boolean
+                      totalWeight:
+                        type: number
+                      isBanned:
+                        type: boolean
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+  /basket:
+    get:
+      summary: GET basket
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      userId:
+                        type: number
+                      addressId:
+                        type: number
+                      address:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          street:
+                            type: string
+                          streetNo:
+                            type: string
+                          city:
+                            type: string
+                          doorNo:
+                            type: string
+                          floor:
+                            type: string
+                          latitude:
+                            type: number
+                          longitude:
+                            type: number
+                          postalCode:
+                            type: string
+                          porch:
+                            type: object
+                          comments:
+                            type: string
+                          courierComment:
+                            type: object
+                          isCurrent:
+                            type: boolean
+                          isCurrentNotVirtual:
+                            type: boolean
+                          label:
+                            type: object
+                          isVirtual:
+                            type: boolean
+                      darkstoreId:
+                        type: number
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            ean:
+                              type: string
+                            title:
+                              type: string
+                            subtitle:
+                              type: string
+                            imagePath:
+                              type: string
+                            quantity:
+                              type: number
+                            quantityAvailable:
+                              type: number
+                            price:
+                              type: number
+                            insufficientStock:
+                              type: boolean
+                            stockItemId:
+                              type: number
+                            vat:
+                              type: number
+                            weight:
+                              type: number
+                            maxQuantity:
+                              type: number
+                            isRemovable:
+                              type: boolean
+                            isExcludedFromDiscount:
+                              type: boolean
+                            isFreebie:
+                              type: boolean
+                            id:
+                              type: number
+                      coupons:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                            name:
+                              type: string
+                            display:
+                              type: string
+                            description:
+                              type: string
+                            validTill:
+                              type: string
+                            validFrom:
+                              type: string
+                            freeShipping:
+                              type: boolean
+                            noPaperBags:
+                              type: boolean
+                            fixedDiscount:
+                              type: number
+                            percentDiscount:
+                              type: number
+                            referal:
+                              type: boolean
+                            gift:
+                              type: boolean
+                            valid:
+                              type: object
+                            minOrderValue:
+                              type: number
+                            calculatedDiscount:
+                              type: object
+                      itemTotal:
+                        type: number
+                      total:
+                        type: number
+                      delivery:
+                        type: number
+                      standardDeliveryCost:
+                        type: number
+                      freeShippingThreshold:
+                        type: number
+                      discountThreshold:
+                        type: number
+                      discountValue:
+                        type: number
+                      discountDelivery:
+                        type: number
+                      discountFromCrossingThreshold:
+                        type: number
+                      totalForThresholdDiscount:
+                        type: number
+                      totalForFreeShipping:
+                        type: number
+                      totalWithoutDiscount:
+                        type: number
+                      isDiscountThresholdCrossed:
+                        type: boolean
+                      isFreeShipping:
+                        type: boolean
+                      paperBagFee:
+                        type: number
+                      checkoutTrialDate:
+                        type: object
+                      insufficientStock:
+                        type: boolean
+                      totalWeight:
+                        type: number
+                      isBanned:
+                        type: boolean
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+  /couriers/{id}/available/detail:
+    get:
+      summary: GET detail by id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: object
+                    properties:
+                      estimatedWaitTimeInMinutes:
+                        type: number
+                      canDeliver:
+                        type: boolean
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+  /orders/{id}:
+    post:
+      summary: POST orders by id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: object
+                    properties:
+                      estimatedWaitTimeInMinutes:
+                        type: object
+                      orderId:
+                        type: number
+                      canDeliver:
+                        type: boolean
+                      paymentId:
+                        type: object
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: GET orders by id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      courier:
+                        type: object
+                      customer:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          firstname:
+                            type: string
+                          lastname:
+                            type: string
+                          phone:
+                            type: string
+                          email:
+                            type: string
+                      address:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          street:
+                            type: string
+                          streetNo:
+                            type: string
+                          city:
+                            type: string
+                          doorNo:
+                            type: string
+                          floor:
+                            type: string
+                          latitude:
+                            type: number
+                          longitude:
+                            type: number
+                          postalCode:
+                            type: string
+                          porch:
+                            type: object
+                          comments:
+                            type: string
+                          courierComment:
+                            type: object
+                          isCurrent:
+                            type: boolean
+                          isCurrentNotVirtual:
+                            type: boolean
+                          label:
+                            type: object
+                          isVirtual:
+                            type: boolean
+                      pendingRefund:
+                        type: number
+                      refunded:
+                        type: number
+                      total:
+                        type: number
+                      discount:
+                        type: number
+                      delivery:
+                        type: number
+                      printed:
+                        type: boolean
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                            name:
+                              type: string
+                            quantity:
+                              type: number
+                            price:
+                              type: number
+                            returned:
+                              type: boolean
+                            onReceipt:
+                              type: boolean
+                            product:
+                              type: object
+                              properties:
+                                ean:
+                                  type: string
+                                headline:
+                                  type: string
+                                title:
+                                  type: string
+                                subTitle:
+                                  type: string
+                                weight:
+                                  type: string
+                                imagePath:
+                                  type: string
+                                alcohol:
+                                  type: boolean
+                            pickInfo:
+                              type: object
+                              properties:
+                                shelf:
+                                  type: number
+                                level:
+                                  type: number
+                                levelColor:
+                                  type: string
+                                path:
+                                  type: number
+                            quantityAvailable:
+                              type: number
+                      darkstore:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          name:
+                            type: string
+                          identifier:
+                            type: string
+                          virtual:
+                            type: boolean
+                          address:
+                            type: object
+                            properties:
+                              id:
+                                type: number
+                              street:
+                                type: string
+                              streetNo:
+                                type: string
+                              city:
+                                type: string
+                              doorNo:
+                                type: string
+                              floor:
+                                type: string
+                              latitude:
+                                type: number
+                              longitude:
+                                type: number
+                              postalCode:
+                                type: string
+                              porch:
+                                type: string
+                              comments:
+                                type: object
+                              courierComment:
+                                type: object
+                              isCurrent:
+                                type: boolean
+                              isCurrentNotVirtual:
+                                type: boolean
+                              label:
+                                type: object
+                              isVirtual:
+                                type: boolean
+                          area:
+                            type: object
+                          openingTime:
+                            type: object
+                          courierSplitEnabled:
+                            type: boolean
+                          sortKey:
+                            type: number
+                          sliderId:
+                            type: number
+                          available:
+                            type: boolean
+                          unavailableMessage:
+                            type: object
+                          unavailableUntilTime:
+                            type: object
+                          orderStackingEnabled:
+                            type: string
+                          isVirtualSplitEnabled:
+                            type: boolean
+                      status:
+                        type: string
+                      paymentStatus:
+                        type: string
+                      tipPaymentStatus:
+                        type: object
+                      tipAmount:
+                        type: object
+                      feedback:
+                        type: object
+                      deliveryDistance:
+                        type: number
+                      customerTotalOrderCount:
+                        type: number
+                      customerTotalSpent:
+                        type: number
+                      customerLastOrderDate:
+                        type: object
+                      date:
+                        type: number
+                      acceptDate:
+                        type: object
+                      atLocationDate:
+                        type: object
+                      deliveryDate:
+                        type: object
+                      pickingDate:
+                        type: object
+                      pickingCompletedDate:
+                        type: object
+                      paymentCompletedDate:
+                        type: object
+                      courierNotifiedDate:
+                        type: object
+                      courierReturnDate:
+                        type: object
+                      estimatedDeliveryTime:
+                        type: object
+                      courierTimerStartDate:
+                        type: object
+                      scheduled:
+                        type: boolean
+                      canWait:
+                        type: boolean
+                      alcohol:
+                        type: boolean
+                      ageVerification:
+                        type: object
+                      scheduleSlot:
+                        type: object
+                      courierDetail:
+                        type: object
+                      coupons:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                            name:
+                              type: string
+                            display:
+                              type: string
+                            description:
+                              type: string
+                            validTill:
+                              type: string
+                            validFrom:
+                              type: string
+                            freeShipping:
+                              type: boolean
+                            noPaperBags:
+                              type: boolean
+                            fixedDiscount:
+                              type: number
+                            percentDiscount:
+                              type: number
+                            referal:
+                              type: boolean
+                            gift:
+                              type: boolean
+                            valid:
+                              type: object
+                            minOrderValue:
+                              type: number
+                            calculatedDiscount:
+                              type: object
+                      deliveryEstimations:
+                        type: array
+                        items: {}
+                      returns:
+                        type: object
+                      darkstorePickingZone:
+                        type: object
+                      deliveryTimes:
+                        type: object
+                        properties:
+                          communicatedDelayToRidingTime:
+                            type: number
+                          actualDelayToRidingTime:
+                            type: number
+                          orderAcceptTime:
+                            type: number
+                          pickingTime:
+                            type: number
+                          atPickerStationTime:
+                            type: number
+                          ridingTime:
+                            type: number
+                          atLocationTime:
+                            type: number
+                          returnTime:
+                            type: number
+                          deliveryTime:
+                            type: number
+                          totalToCustomerTime:
+                            type: number
+                          courierCycleTime:
+                            type: number
+                      picker:
+                        type: boolean
+                      darkstoreId:
+                        type: number
+                      darkstoreName:
+                        type: string
+                      cancelReason:
+                        type: object
+                      stackId:
+                        type: object
+                      isVip:
+                        type: boolean
+                      isLongDistance:
+                        type: boolean
+                      color:
+                        type: object
+                      zoneNumber:
+                        type: object
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+  /payu/orders/{id}:
+    post:
+      summary: POST orders by id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: object
+                    properties:
+                      status:
+                        type: object
+                        properties:
+                          statusCode:
+                            type: string
+                      redirectUri:
+                        type: object
+                      orderId:
+                        type: string
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+      - name: extended
+        in: query
+        required: false
+        schema:
+          type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                continueUrl:
+                  type: string
+                paymentMethod:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    authorizationCode:
+                      type: string
+                    blikData:
+                      type: object
+                      properties:
+                        register:
+                          type: boolean
+  /orders/{id}/estimateddeliverydate:
+    get:
+      summary: GET estimateddeliverydate by id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: object
+                    properties:
+                      estimatedDeliveryDate:
+                        type: string
+                      calculationInfo:
+                        type: string
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+  /users/active:
+    post:
+      summary: POST active
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items: {}

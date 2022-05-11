@@ -1,0 +1,18 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: mitmproxy2swagger.py",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceRoot}/mitmproxy2swagger.py",
+            "cwd": "${workspaceRoot}",
+            "args": ["-i", "flows/flows_lisek_filtered", "-o", "ass.yaml", "-p", "https://api2.lisek.app/api"],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}
