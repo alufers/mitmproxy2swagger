@@ -49,7 +49,7 @@ To create a specification by inspecting HTTP traffic you will need to:
 
     Please note that you can use an existing schema, in which case the existing schema will be extended with the new data. You can also run it a few times with different flow captures, the captured data will be safely merged.
 
-    `<api_prefix>` is the base url of the API you wish to reverse-engineer. You will need to obtain it by observing the requests being made in mimtproxy.
+    `<api_prefix>` is the base url of the API you wish to reverse-engineer. You will need to obtain it by observing the requests being made in mitmproxy.
 
     For example if an app has made requests like these:
 
@@ -87,11 +87,11 @@ To create a specification by inspecting HTTP traffic you will need to:
 
     Please note that mitmproxy2swagger will not overwrite existing endpoint descriptions, if you want to overwrite them, you can delete them before running the second pass.
 
-    Passing `--examples` will add example data to to requests and responses. Take caution when using this option, as it may add sensitive data (tokens, passwords, personal information etc.) to the schema.
+    Passing `--examples` will add example data to requests and responses. Take caution when using this option, as it may add sensitive data (tokens, passwords, personal information etc.) to the schema.
 
 ## Example output
 
-See the [examples](./example_outputs/). You will find a generated schema there and a html file with the generated documentation (via [redoc-cli](https://www.npmjs.com/package/redoc-cli)).
+See the [examples](./example_outputs/). You will find a generated schema there and an html file with the generated documentation (via [redoc-cli](https://www.npmjs.com/package/redoc-cli)).
 
 See the generated html file [here](https://raw.githack.com/alufers/mitmproxy2swagger/master/example_outputs/lisek-static.html).
 
