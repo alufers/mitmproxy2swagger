@@ -1,6 +1,9 @@
 # mitmproxy2swagger
 
-![A video showcasing the tool](./docs/video.mp4)
+
+https://user-images.githubusercontent.com/5400940/168086818-c48f60ab-3f95-42eb-b435-c8b1a6326b81.mp4
+
+
 
 A tool for automatically converting [mitmproxy](https://mitmproxy.org/) captures to [OpenAPI 3.0](https://swagger.io/specification/) specifications. This means that you can automatically reverse-engineer REST APIs by just running the apps and capturing the traffic.
 
