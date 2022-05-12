@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mitmproxy2swagger"
-version = "0.1.0"
+version = "0.2.0"
 description = ""
 authors = ["alufers <alufers@wp.pl>"]
 
@@ -14,3 +14,6 @@ mitmproxy = "^8.0.0"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+mitmproxy2swagger = 'mitmproxy2swagger.mitmproxy2swagger:main'
