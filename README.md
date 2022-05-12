@@ -9,11 +9,15 @@ A tool for automatically converting [mitmproxy](https://mitmproxy.org/) captures
 
 ## Installation
 
+First you will need python3 and pip3.
+
 ```bash
-$ pip install mitmproxy ruamel.yaml
+$ pip install mitmproxy2swagger 
+# ... or ...
+$ pip3 install mitmproxy2swagger
 ```
 
-Then clone the repo and run `mitmproxy2swagger.py` as per examples below.
+Then clone the repo and run `mitmproxy2swagger` as per examples below.
 
 ## Usage
 
@@ -40,7 +44,7 @@ To create a specification by inspecting HTTP traffic you will need to:
 3. Run the first pass of mitmproxy2swagger:
 
     ```bash
-    $ ./mitmproxy2swagger.py -i <path_to_mitmptoxy_flow> -o <path_to_output_schema> -p <api_prefix>
+    $ mitmproxy2swagger -i <path_to_mitmptoxy_flow> -o <path_to_output_schema> -p <api_prefix>
     ```
 
     Please note that you can use an existing schema, in which case the existing schema will be extended with the new data. You can also run it a few times with different flow captures, the captured data will be safely merged.
@@ -76,7 +80,7 @@ To create a specification by inspecting HTTP traffic you will need to:
 5. Run the second pass of mitmproxy2swagger:
 
     ```bash
-    $ ./mitmproxy2swagger.py -i <path_to_mitmptoxy_flow> -o <path_to_output_schema> -p <api_prefix> [--examples]
+    $ mitmproxy2swagger -i <path_to_mitmptoxy_flow> -o <path_to_output_schema> -p <api_prefix> [--examples]
     ```
 
     Run the command a second time (with the same schema file). It will pick up the edited lines and generate endpoint descriptions. 
