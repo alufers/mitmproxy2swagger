@@ -1,0 +1,12 @@
+openapi: 3.0.0
+info:
+  title: flows/flows_lisek_order Mitmproxy2Swagger
+  version: 1.0.0
+servers:
+- url: https://api.lisek.app
+  description: The default server
+paths: {}
+x-path-templates:
+# Remove the ignore: prefix to generate an endpoint with its URL
+# Lines that are closer to the top take precedence, the matching is greedy
+  []
