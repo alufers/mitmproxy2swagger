@@ -93,6 +93,8 @@ To create a specification by inspecting HTTP traffic you will need to:
 
 See the [examples](./examples/). You will find a generated schema there and a html file with the generated documentation (via [redoc-cli](https://www.npmjs.com/package/redoc-cli)).
 
+See the generated html file [here](https://raw.githack.com/alufers/mitmproxy2swagger/master/example_outputs/lisek-static.html).
+
 ## License
 MIT
 
