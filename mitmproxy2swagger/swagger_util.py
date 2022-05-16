@@ -13,6 +13,7 @@ VERBS = [
     'activate'
 ]
 
+
 # generate a name for the endpoint from the path template
 # POST /api/v1/things/{id}/create -> POST create thing by id
 def path_template_to_endpoint_name(method, path_template):
@@ -31,7 +32,7 @@ def path_template_to_endpoint_name(method, path_template):
     name_parts = []
     for segment in segments:
         if segment in VERBS:
-           # prepend to the name_parts
+            # prepend to the name_parts
             name_parts.insert(0, segment.lower())
         else:
             name_parts.insert(0, segment.lower())
@@ -40,6 +41,7 @@ def path_template_to_endpoint_name(method, path_template):
         name_parts.append("by " + param.replace('{', '').replace('}', ''))
         break
     return method.upper() + ' ' + ' '.join(name_parts)
+
 
 # when given an url and its path template, generates the parameters section of the request
 def url_to_params(url, path_template):
@@ -71,6 +73,7 @@ def url_to_params(url, path_template):
             })
     return params
 
+
 def value_to_schema(value):
     # check if value is a number
     if type(value) == int or type(value) == float:
@@ -94,7 +97,7 @@ def value_to_schema(value):
                 'type': 'array',
                 'items': {}
             }
-        
+
         return {
             'type': 'array',
             'items': value_to_schema(value[0])
@@ -109,13 +112,16 @@ def value_to_schema(value):
             }
         }
     # if it is none, return null
-    elif value == None:
+    elif value is None:
         return {
             'type': 'object'
         }
 
+
 MAX_EXAMPLE_ARRAY_ELEMENTS = 10
 MAX_EXAMPLE_OBJECT_PROPERTIES = 150
+
+
 # recursively scan an example value and limit the number of elements and properties
 def limit_example_size(example):
     if type(example) == list:
