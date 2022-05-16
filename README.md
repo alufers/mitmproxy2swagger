@@ -7,6 +7,13 @@ https://user-images.githubusercontent.com/5400940/168086818-c48f60ab-3f95-42eb-b
 
 A tool for automatically converting [mitmproxy](https://mitmproxy.org/) captures to [OpenAPI 3.0](https://swagger.io/specification/) specifications. This means that you can automatically reverse-engineer REST APIs by just running the apps and capturing the traffic.
 
+---
+**🆕 NEW!**
+
+Added support for processing HAR exported from the browser DevTools. See [Usage - HAR](#har) for more details.
+
+---
+
 ## Installation
 
 First you will need python3 and pip3.
@@ -20,6 +27,8 @@ $ pip3 install mitmproxy2swagger
 Then clone the repo and run `mitmproxy2swagger` as per examples below.
 
 ## Usage
+
+### Mitmproxy
 
 To create a specification by inspecting HTTP traffic you will need to:
 
@@ -88,6 +97,15 @@ To create a specification by inspecting HTTP traffic you will need to:
     Please note that mitmproxy2swagger will not overwrite existing endpoint descriptions, if you want to overwrite them, you can delete them before running the second pass.
 
     Passing `--examples` will add example data to requests and responses. Take caution when using this option, as it may add sensitive data (tokens, passwords, personal information etc.) to the schema.
+
+### HAR
+
+1. Capture and export the traffic from the browser DevTools.
+
+    In the browser DevTools, go to the Network tab and click the "Export HAR" button.
+
+    ![A screenshot showing where the export har button is located](./docs/export_har_button.png)
+2. Continue the same way you would do with the mitmproxy dump. `mitmproxy2swagger` will automatically detect the HAR file and process it.
 
 ## Example output
 

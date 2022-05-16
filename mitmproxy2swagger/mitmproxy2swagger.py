@@ -38,9 +38,9 @@ def set_key_if_not_exists(dict, key, value):
 def main():
 
     parser = argparse.ArgumentParser(
-        description='Converts a mitmproxy dump file to a swagger schema.')
+        description='Converts a mitmproxy dump file or HAR to a swagger schema.')
     parser.add_argument(
-        '-i', '--input', help='The input mitmproxy dump file', required=True)
+        '-i', '--input', help='The input mitmproxy dump file or HAR dump file (from DevTools)', required=True)
     parser.add_argument(
         '-o', '--output', help='The output swagger schema file (yaml). If it exists, new endpoints will be added', required=True)
     parser.add_argument('-p', '--api-prefix', help='The api prefix', required=True)
@@ -93,10 +93,6 @@ def main():
 
     # new endpoints will be added here so that they can be added as comments in the swagger file
     new_path_templates = []
-
-
-
-
 
     path_template_regexes = [re.compile(path_to_regex(path))
                             for path in path_templates]
