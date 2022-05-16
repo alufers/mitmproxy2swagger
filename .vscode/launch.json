@@ -8,9 +8,9 @@
             "name": "Python: mitmproxy2swagger.py",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceRoot}/mitmproxy2swagger.py",
+            "program": "${workspaceRoot}/mitmproxy2swagger/mitmproxy2swagger.py",
             "cwd": "${workspaceRoot}",
-            "args": ["-i", "flows/flows_lisek_filtered", "-o", "ass.yaml", "-p", "https://api2.lisek.app/api"],
+            "args": ["-i", "flows/www.x-kom.pl.har", "-o", "ass.yaml", "-p", "https://mobileapi.x-kom.pl"],
             "console": "integratedTerminal",
             "justMyCode": true
         }

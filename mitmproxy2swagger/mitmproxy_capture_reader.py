@@ -3,6 +3,8 @@ from tokenize import Number
 from typing import Iterator
 from mitmproxy import io as iom, http
 from mitmproxy.exceptions import FlowReadException
+from typing import Iterator
+
 import os
 
 def mitmproxy_dump_file_huristic(file_path: str) -> Number:
@@ -17,8 +19,8 @@ def mitmproxy_dump_file_huristic(file_path: str) -> Number:
         # if file contains non-ascii characters
         if data.decode('utf-8', 'ignore').isprintable() is False:
             val += 50
-        # if first character is a digit
-        if data[0].isdigit():
+        # if first character of the byte array is a digit
+        if str(data[0]).isdigit() is True:
             val += 5
         # if it contains the word status_code
         if b'status_code' in data:
@@ -47,6 +49,8 @@ class MitmproxyFlowWrapper:
         return self.flow.request.content
     def get_response_status_code(self):
         return self.flow.response.status_code
+    def get_response_reason(self):
+        return self.flow.response.reason
     def get_response_headers(self):
         headers = {}
         for k, v in self.flow.response.headers.items(multi = True):\
@@ -72,6 +76,9 @@ class MitmproxyCaptureReader:
                     if self.progress_callback:
                         self.progress_callback(logfile.tell() / logfile_size)
                     if isinstance(f, http.HTTPFlow):
+                        if f.response is None:
+                            print("[warn] flow without response: {}".format(f.request.url))
+                            continue
                         yield MitmproxyFlowWrapper(f)
             except FlowReadException as e:
                 print(f"Flow file corrupted: {e}")
