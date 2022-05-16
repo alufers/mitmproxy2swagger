@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mitmproxy2swagger"
-version = "0.5.0"
+version = "0.5.1"
 description = ""
 authors = ["alufers <alufers@wp.pl>"]
 readme = "README.md"

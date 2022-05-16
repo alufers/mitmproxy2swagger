@@ -13,10 +13,10 @@ import os
 import argparse
 import ruamel.yaml
 import re
-import swagger_util
-from har_capture_reader import HarCaptureReader, har_archive_heuristic
-from mitmproxy_capture_reader import MitmproxyCaptureReader, mitmproxy_dump_file_huristic
-import console_util
+import mitmproxy2swagger.console_util
+from mitmproxy2swagger.har_capture_reader import HarCaptureReader, har_archive_heuristic
+from mitmproxy2swagger.mitmproxy_capture_reader import MitmproxyCaptureReader, mitmproxy_dump_file_huristic
+import mitmproxy2swagger.console_util
 
 def path_to_regex(path):
     # replace the path template with a regex
