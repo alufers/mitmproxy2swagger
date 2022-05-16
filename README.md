@@ -1,5 +1,10 @@
 # mitmproxy2swagger
 
+<center>
+
+[![PyPI version](https://badge.fury.io/py/mitmproxy2swagger.svg)](https://badge.fury.io/py/mitmproxy2swagger)
+
+</center>
 
 https://user-images.githubusercontent.com/5400940/168086818-c48f60ab-3f95-42eb-b435-c8b1a6326b81.mp4
 
