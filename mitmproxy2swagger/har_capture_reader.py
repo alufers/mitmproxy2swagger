@@ -71,9 +71,9 @@ class HarCaptureReader:
         self.progress_callback = progress_callback
     def captured_requests(self) -> Iterator[HarFlowWrapper]:
         har_file_size = os.path.getsize(self.file_path)
-        with open(self.file_path, 'r') as f:
+        with open(self.file_path, 'r', encoding='utf-8') as f:
             data = json_stream.load(f)
-            for entry in data['log']['entries'].persistent():       
+            for entry in data['log']['entries'].persistent():
                 if self.progress_callback:
                     self.progress_callback(f.tell() / har_file_size)
                 yield HarFlowWrapper(entry)
