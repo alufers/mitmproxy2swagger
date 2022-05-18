@@ -2,14 +2,8 @@
 """
 Converts a mitmproxy dump file to a swagger schema.
 """
-from email import header
-from mitmproxy import io as iom, http
 from mitmproxy.exceptions import FlowReadException
-import pprint
-import sys
-import io
 import json
-import os
 import argparse
 import ruamel.yaml
 import re
@@ -18,12 +12,13 @@ from .har_capture_reader import HarCaptureReader, har_archive_heuristic
 from .mitmproxy_capture_reader import MitmproxyCaptureReader, mitmproxy_dump_file_huristic
 from . import console_util
 
+
 def path_to_regex(path):
     # replace the path template with a regex
     path = path.replace('{', '(?P<')
     path = path.replace('}', '>[^/]+)')
     path = path.replace('*', '.*')
-    path = path.replace('/', '\/')
+    path = path.replace('/', '\\/')
     return "^" + path + "$"
 
 
@@ -35,10 +30,13 @@ def strip_query_string(path):
 def set_key_if_not_exists(dict, key, value):
     if key not in dict:
         dict[key] = value
+
+
 def progress_callback(progress):
     console_util.print_progress_bar(progress)
-def main():
 
+
+def main():
     parser = argparse.ArgumentParser(
         description='Converts a mitmproxy dump file or HAR to a swagger schema.')
     parser.add_argument(
@@ -70,29 +68,33 @@ def main():
         swagger = ruamel.yaml.comments.CommentedMap({
             "openapi": "3.0.0",
             "info": {
-                "title":  args.input + " Mitmproxy2Swagger",
+                "title": args.input + " Mitmproxy2Swagger",
                 "version": "1.0.0"
             },
         })
     # strip the trailing slash from the api prefix
     args.api_prefix = args.api_prefix.rstrip('/')
 
-    if not 'servers' in swagger or swagger['servers'] is None:
+    if 'servers' not in swagger or swagger['servers'] is None:
         swagger['servers'] = []
+
     # add the server if it doesn't exist
     if not any(server['url'] == args.api_prefix for server in swagger['servers']):
         swagger['servers'].append({
             "url": args.api_prefix,
             "description": "The default server"
         })
-    if not 'paths' in swagger or swagger['paths'] is None:
+
+    if 'paths' not in swagger or swagger['paths'] is None:
         swagger['paths'] = {}
+
     if 'x-path-templates' not in swagger or swagger['x-path-templates'] is None:
         swagger['x-path-templates'] = []
 
     path_templates = []
     for path in swagger['paths']:
         path_templates.append(path)
+
     # also add paths from the the x-path-templates array
     if 'x-path-templates' in swagger and swagger['x-path-templates'] is not None:
         for path in swagger['x-path-templates']:
@@ -102,10 +104,10 @@ def main():
     new_path_templates = []
 
     path_template_regexes = [re.compile(path_to_regex(path))
-                            for path in path_templates]
+                             for path in path_templates]
+
     try:
         for f in caputre_reader.captured_requests():
-            
             # strip the api prefix from the url
             url = f.get_url()
             if not url.startswith(args.api_prefix):
@@ -130,15 +132,16 @@ def main():
             set_key_if_not_exists(
                 swagger['paths'], path_template_to_set, {})
 
-        
-            set_key_if_not_exists(swagger['paths'][path_template_to_set], method,  {
+            set_key_if_not_exists(swagger['paths'][path_template_to_set], method, {
                 'summary': swagger_util.path_template_to_endpoint_name(method, path_template_to_set),
-            
                 'responses': {}
             })
+
             params = swagger_util.url_to_params(url, path_template_to_set)
+
             if params is not None and len(params) > 0:
                 set_key_if_not_exists(swagger['paths'][path_template_to_set][method], 'parameters', params)
+
             if method not in ['get', 'head']:
                 body = f.get_request_body()
                 if body is not None:
@@ -161,6 +164,7 @@ def main():
                                 body_val)
                         set_key_if_not_exists(
                             swagger['paths'][path_template_to_set][method], 'requestBody', content_to_set)
+
             # try parsing the response as json
             response_body = f.get_response_body()
             if response_body is not None:
@@ -185,7 +189,6 @@ def main():
 
     except FlowReadException as e:
         print(f"Flow file corrupted: {e}")
-
 
     new_path_templates.sort()
 
@@ -240,5 +243,7 @@ def main():
     with open(args.output, 'w') as f:
         yaml.dump(swagger, f)
     print("Done!")
+
+
 if __name__ == "__main__":
     main()

@@ -1,6 +1,8 @@
 import os
 import json_stream
 from typing import Iterator
+
+
 # a heuristic to determine if a fileis a har archive
 def har_archive_heuristic(file_path: str) -> int:
     val = 0
@@ -27,13 +29,17 @@ def har_archive_heuristic(file_path: str) -> int:
             val += 15
     return val
 
+
 class HarFlowWrapper:
     def __init__(self, flow: dict):
         self.flow = flow
+
     def get_url(self):
         return self.flow['request']['url']
+
     def get_method(self):
         return self.flow['request']['method']
+
     def get_request_headers(self):
         headers = {}
         for kv in self.flow['request']['headers']:
@@ -42,14 +48,18 @@ class HarFlowWrapper:
             # create list on key if it does not exist
             headers[k] = headers.get(k, [])
             headers[k].append(v)
+
     def get_request_body(self):
         if 'request' in self.flow and 'postData' in self.flow['request'] and 'text' in self.flow['request']['postData']:
             return self.flow['request']['postData']['text']
         return None
+
     def get_response_status_code(self):
         return self.flow['response']['status']
+
     def get_response_reason(self):
         return self.flow['response']['statusText']
+
     def get_response_headers(self):
         headers = {}
         for kv in self.flow['response']['headers']:
@@ -59,16 +69,18 @@ class HarFlowWrapper:
             headers[k] = headers.get(k, [])
             headers[k].append(v)
         return headers
+
     def get_response_body(self):
         if 'response' in self.flow and 'content' in self.flow['response'] and 'text' in self.flow['response']['content']:
             return self.flow['response']['content']['text']
         return None
-        
+
 
 class HarCaptureReader:
     def __init__(self, file_path: str, progress_callback=None):
         self.file_path = file_path
         self.progress_callback = progress_callback
+
     def captured_requests(self) -> Iterator[HarFlowWrapper]:
         har_file_size = os.path.getsize(self.file_path)
         with open(self.file_path, 'r', encoding='utf-8') as f:
@@ -77,4 +89,3 @@ class HarCaptureReader:
                 if self.progress_callback:
                     self.progress_callback(f.tell() / har_file_size)
                 yield HarFlowWrapper(entry)
-

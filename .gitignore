@@ -5,3 +5,4 @@ lisek.swagger.yml
 dist
 dupsko.yaml
 dist
+/.mypy_cache/

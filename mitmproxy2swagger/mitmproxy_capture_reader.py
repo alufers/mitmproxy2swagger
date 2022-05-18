@@ -1,13 +1,10 @@
-
-from tokenize import Number
 from typing import Iterator
 from mitmproxy import io as iom, http
 from mitmproxy.exceptions import FlowReadException
-from typing import Iterator
-
 import os
 
-def mitmproxy_dump_file_huristic(file_path: str) -> Number:
+
+def mitmproxy_dump_file_huristic(file_path: str) -> int:
     val = 0
     if 'flow' in file_path:
         val += 1
@@ -28,36 +25,43 @@ def mitmproxy_dump_file_huristic(file_path: str) -> Number:
         if b'regular' in data:
             val += 10
     return val
-    
 
 
 class MitmproxyFlowWrapper:
     def __init__(self, flow: http.HTTPFlow):
         self.flow = flow
+
     def get_url(self):
         return self.flow.request.url
+
     def get_method(self):
         return self.flow.request.method
+
     def get_request_headers(self):
         headers = {}
-        for k, v in self.flow.request.headers.items(multi = True):\
+        for k, v in self.flow.request.headers.items(multi=True):
             # create list on key if it does not exist
             headers[k] = headers.get(k, [])
             headers[k].append(v)
         return headers
+
     def get_request_body(self):
         return self.flow.request.content
+
     def get_response_status_code(self):
         return self.flow.response.status_code
+
     def get_response_reason(self):
         return self.flow.response.reason
+
     def get_response_headers(self):
         headers = {}
-        for k, v in self.flow.response.headers.items(multi = True):\
+        for k, v in self.flow.response.headers.items(multi=True):
             # create list on key if it does not exist
             headers[k] = headers.get(k, [])
             headers[k].append(v)
         return headers
+
     def get_response_body(self):
         return self.flow.response.content
 
@@ -82,4 +86,3 @@ class MitmproxyCaptureReader:
                         yield MitmproxyFlowWrapper(f)
             except FlowReadException as e:
                 print(f"Flow file corrupted: {e}")
-
