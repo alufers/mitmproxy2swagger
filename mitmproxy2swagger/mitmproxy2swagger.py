@@ -149,6 +149,8 @@ def main():
                     # try to parse the body as json
                     try:
                         body_val = json.loads(f.get_request_body())
+                    except UnicodeDecodeError:
+                        pass
                     except json.decoder.JSONDecodeError:
                         pass
                     if body_val is not None:
@@ -170,6 +172,8 @@ def main():
             if response_body is not None:
                 try:
                     response_json = json.loads(response_body)
+                except UnicodeDecodeError:
+                    response_json = None
                 except json.decoder.JSONDecodeError:
                     response_json = None
                 if response_json is not None:
