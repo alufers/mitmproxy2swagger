@@ -36,6 +36,12 @@ def progress_callback(progress):
     console_util.print_progress_bar(progress)
 
 
+def detect_input_format(file_path):
+    if har_archive_heuristic(file_path) > mitmproxy_dump_file_huristic(file_path):
+        return HarCaptureReader(file_path, progress_callback)
+    return MitmproxyCaptureReader(file_path, progress_callback)
+
+
 def main():
     parser = argparse.ArgumentParser(
         description='Converts a mitmproxy dump file or HAR to a swagger schema.')
@@ -46,15 +52,20 @@ def main():
     parser.add_argument('-p', '--api-prefix', help='The api prefix', required=True)
     parser.add_argument('-e', '--examples', action='store_true',
                         help='Include examples in the schema. This might expose sensitive information.')
+    parser.add_argument('-f', '--format', choices=['flow', 'har'],
+                        help='Override the input file format auto-detection.')
     args = parser.parse_args()
 
     yaml = ruamel.yaml.YAML()
+
     caputre_reader = None
-    # detect the input file type
-    if har_archive_heuristic(args.input) > mitmproxy_dump_file_huristic(args.input):
+    if args.format == 'flow':
+        caputre_reader = MitmproxyCaptureReader(args.input, progress_callback)
+    elif args.format == 'har':
         caputre_reader = HarCaptureReader(args.input, progress_callback)
     else:
-        caputre_reader = MitmproxyCaptureReader(args.input, progress_callback)
+        caputre_reader = detect_input_format(args.input)
+
     swagger = None
 
     # try loading the existing swagger file
