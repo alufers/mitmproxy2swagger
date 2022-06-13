@@ -4,6 +4,7 @@ version = "0.6.0"
 description = ""
 authors = ["alufers <alufers@wp.pl>"]
 readme = "README.md"
+license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.5"
