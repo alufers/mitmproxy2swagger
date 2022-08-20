@@ -86,3 +86,5 @@ class MitmproxyCaptureReader:
                         yield MitmproxyFlowWrapper(f)
             except FlowReadException as e:
                 print(f"Flow file corrupted: {e}")
+    def name(self):
+        return "flow"

@@ -14,10 +14,10 @@ def har_archive_heuristic(file_path: str) -> int:
         data = f.read(2048)
         # if file contains only ascii characters
         if data.decode('utf-8', 'ignore').isprintable() is True:
-            val += 40
+            val += 25
         # if first character is a '{'
         if data[0] == '{':
-            val += 15
+            val += 23
         # if it contains the word '"WebInspector"'
         if b'"WebInspector"' in data:
             val += 15
@@ -89,3 +89,5 @@ class HarCaptureReader:
                 if self.progress_callback:
                     self.progress_callback(f.tell() / har_file_size)
                 yield HarFlowWrapper(entry)
+    def name(self):
+        return 'har'

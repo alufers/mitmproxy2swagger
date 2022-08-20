@@ -2,6 +2,7 @@ import sys
 
 ANSI_RGB = "\033[38;2;{};{};{}m"
 ANSI_RGB_BG = "\033[48;2;{};{};{}m"
+ANSI_RED = "\033[31m"
 ANSI_RESET = "\033[0m"
 
 RAINBOW_COLORS = [

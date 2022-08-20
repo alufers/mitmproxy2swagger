@@ -2,6 +2,9 @@
 """
 Converts a mitmproxy dump file to a swagger schema.
 """
+import os
+import sys
+import traceback
 from mitmproxy.exceptions import FlowReadException
 import json
 import argparse
@@ -37,7 +40,12 @@ def progress_callback(progress):
 
 
 def detect_input_format(file_path):
-    if har_archive_heuristic(file_path) > mitmproxy_dump_file_huristic(file_path):
+    har_score = har_archive_heuristic(file_path)
+    mitmproxy_score =  mitmproxy_dump_file_huristic(file_path)
+    if 'MITMPROXY2SWAGGER_DEBUG' in os.environ:
+        print('har score: ' + str(har_score))
+        print('mitmproxy score: ' + str(mitmproxy_score))
+    if har_score > mitmproxy_score:
         return HarCaptureReader(file_path, progress_callback)
     return MitmproxyCaptureReader(file_path, progress_callback)
 
@@ -59,7 +67,7 @@ def main():
     yaml = ruamel.yaml.YAML()
 
     caputre_reader = None
-    if args.format == 'flow':
+    if args.format == 'flow' or args.format == 'mitmproxy':
         caputre_reader = MitmproxyCaptureReader(args.input, progress_callback)
     elif args.format == 'har':
         caputre_reader = HarCaptureReader(args.input, progress_callback)
@@ -204,6 +212,14 @@ def main():
 
     except FlowReadException as e:
         print(f"Flow file corrupted: {e}")
+    except ValueError as e:
+        print(f"ValueError: {e}")
+        # print stack trace
+        traceback.print_exception(*sys.exc_info())
+        print(f"{console_util.ANSI_RED}Failed to parse the input file as '{caputre_reader.name()}'. ")
+        if not args.format:
+            print(f"It might happen that the input format as incorrectly detected. Please try using '--fromat flow' or '--format har' to specify the input format.{console_util.ANSI_RESET}")
+        sys.exit(1)
 
     new_path_templates.sort()
 
