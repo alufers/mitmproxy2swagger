@@ -1,5 +1,6 @@
 import os
 import json_stream
+from base64 import b64decode
 from typing import Iterator
 
 
@@ -72,6 +73,8 @@ class HarFlowWrapper:
 
     def get_response_body(self):
         if 'response' in self.flow and 'content' in self.flow['response'] and 'text' in self.flow['response']['content']:
+            if 'encoding' in self.flow['response']['content'] and self.flow['response']['content']['encoding'] == 'base64':
+                return b64decode(self.flow['response']['content']['text']).decode()
             return self.flow['response']['content']['text']
         return None
 
