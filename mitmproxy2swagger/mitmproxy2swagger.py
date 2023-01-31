@@ -215,7 +215,7 @@ def main():
         traceback.print_exception(*sys.exc_info())
         print(f"{console_util.ANSI_RED}Failed to parse the input file as '{caputre_reader.name()}'. ")
         if not args.format:
-            print(f"It might happen that the input format as incorrectly detected. Please try using '--fromat flow' or '--format har' to specify the input format.{console_util.ANSI_RESET}")
+            print(f"It might happen that the input format as incorrectly detected. Please try using '--format flow' or '--format har' to specify the input format.{console_util.ANSI_RESET}")
         sys.exit(1)
     except ValueError as e:
         print(f"ValueError: {e}")
@@ -223,7 +223,7 @@ def main():
         traceback.print_exception(*sys.exc_info())
         print(f"{console_util.ANSI_RED}Failed to parse the input file as '{caputre_reader.name()}'. ")
         if not args.format:
-            print(f"It might happen that the input format as incorrectly detected. Please try using '--fromat flow' or '--format har' to specify the input format.{console_util.ANSI_RESET}")
+            print(f"It might happen that the input format as incorrectly detected. Please try using '--format flow' or '--format har' to specify the input format.{console_util.ANSI_RESET}")
         sys.exit(1)
 
     new_path_templates.sort()
