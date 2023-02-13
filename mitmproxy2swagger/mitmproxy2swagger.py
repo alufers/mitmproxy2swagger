@@ -14,7 +14,7 @@ from . import swagger_util
 from .har_capture_reader import HarCaptureReader, har_archive_heuristic
 from .mitmproxy_capture_reader import MitmproxyCaptureReader, mitmproxy_dump_file_huristic
 from . import console_util
-
+import urllib
 
 def path_to_regex(path):
     # replace the path template with a regex
@@ -165,23 +165,41 @@ def main():
                 body = f.get_request_body()
                 if body is not None:
                     body_val = None
+                    content_type = None
                     # try to parse the body as json
                     try:
                         body_val = json.loads(f.get_request_body())
+                        content_type = 'application/json'
                     except UnicodeDecodeError:
                         pass
                     except json.decoder.JSONDecodeError:
                         pass
+                    if content_type is None:
+                        # try to parse the body as form data
+                        try:
+                            body_val_bytes = dict(urllib.parse.parse_qsl(body, encoding='utf-8', keep_blank_values=True))
+                            body_val = {}
+                            did_find_anything = False
+                            for key, value in body_val_bytes.items():
+                                did_find_anything = True
+                                body_val[key.decode('utf-8')] = value.decode('utf-8')
+                            if did_find_anything:
+                                content_type = 'application/x-www-form-urlencoded'
+                            else:
+                                body_val = None
+                        except UnicodeDecodeError:
+                            pass
+                        
                     if body_val is not None:
                         content_to_set = {
                             'content': {
-                                'application/json': {
+                                content_type: {
                                     'schema': swagger_util.value_to_schema(body_val)
                                 }
                             }
                         }
                         if args.examples:
-                            content_to_set['content']['application/json']['example'] = swagger_util.limit_example_size(
+                            content_to_set['content'][content_type]['example'] = swagger_util.limit_example_size(
                                 body_val)
                         set_key_if_not_exists(
                             swagger['paths'][path_template_to_set][method], 'requestBody', content_to_set)
