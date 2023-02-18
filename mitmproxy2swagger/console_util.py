@@ -29,20 +29,24 @@ def rgb_interpolate(start, end, progress):
 def rainbow_at_position(progress):
     idx_a = int(progress * float(len(RAINBOW_COLORS) - 1))
     idx_b = idx_a + 1
-    return rgb_interpolate(RAINBOW_COLORS[idx_a], RAINBOW_COLORS[idx_b], progress * float(len(RAINBOW_COLORS) - 1) - idx_a)
+    return rgb_interpolate(
+        RAINBOW_COLORS[idx_a],
+        RAINBOW_COLORS[idx_b],
+        progress * float(len(RAINBOW_COLORS) - 1) - idx_a,
+    )
 
 
 def print_progress_bar(progress=0.0):
     sys.stdout.write("\r")
     progress_bar_contents = ""
     PROGRESS_LENGTH = 30
-    blocks = ['▉', '▊', '▋', '▌', '▍', '▎', '▏']
+    blocks = ["▉", "▊", "▋", "▌", "▍", "▎", "▏"]
 
     for i in range(PROGRESS_LENGTH):
         interpolated = rainbow_at_position(i / PROGRESS_LENGTH)
         # check if should print a full block
         if i < int(progress * PROGRESS_LENGTH):
-            interpolated_2nd_half =  rainbow_at_position((i + 0.5) / PROGRESS_LENGTH)
+            interpolated_2nd_half = rainbow_at_position((i + 0.5) / PROGRESS_LENGTH)
             progress_bar_contents += ANSI_RGB.format(*interpolated)
             progress_bar_contents += ANSI_RGB_BG.format(*interpolated_2nd_half)
             progress_bar_contents += "▌"
@@ -50,11 +54,13 @@ def print_progress_bar(progress=0.0):
         elif i < int((progress * PROGRESS_LENGTH) + 0.5):
             progress_bar_contents += ANSI_RESET
             progress_bar_contents += ANSI_RGB.format(*interpolated)
-            progress_bar_contents += blocks[int((progress * PROGRESS_LENGTH) + 0.5) - i - 1]
+            progress_bar_contents += blocks[
+                int((progress * PROGRESS_LENGTH) + 0.5) - i - 1
+            ]
         # otherwise, print a space
         else:
             progress_bar_contents += ANSI_RESET
-            progress_bar_contents += ' '
+            progress_bar_contents += " "
 
     progress_bar_contents += ANSI_RESET
     sys.stdout.write("[{}] {:.1f}%".format(progress_bar_contents, progress * 100))

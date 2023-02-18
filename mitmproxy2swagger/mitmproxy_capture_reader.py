@@ -6,23 +6,23 @@ import os
 
 def mitmproxy_dump_file_huristic(file_path: str) -> int:
     val = 0
-    if 'flow' in file_path:
+    if "flow" in file_path:
         val += 1
-    if 'mitmproxy' in file_path:
+    if "mitmproxy" in file_path:
         val += 1
     # read the first 2048 bytes
-    with open(file_path, 'rb') as f:
+    with open(file_path, "rb") as f:
         data = f.read(2048)
         # if file contains non-ascii characters
-        if data.decode('utf-8', 'ignore').isprintable() is False:
+        if data.decode("utf-8", "ignore").isprintable() is False:
             val += 50
         # if first character of the byte array is a digit
         if str(data[0]).isdigit() is True:
             val += 5
         # if it contains the word status_code
-        if b'status_code' in data:
+        if b"status_code" in data:
             val += 5
-        if b'regular' in data:
+        if b"regular" in data:
             val += 10
     return val
 
@@ -72,7 +72,7 @@ class MitmproxyCaptureReader:
         self.progress_callback = progress_callback
 
     def captured_requests(self) -> Iterator[MitmproxyFlowWrapper]:
-        with open(self.file_path, 'rb') as logfile:
+        with open(self.file_path, "rb") as logfile:
             logfile_size = os.path.getsize(self.file_path)
             freader = iom.FlowReader(logfile)
             try:
@@ -81,10 +81,13 @@ class MitmproxyCaptureReader:
                         self.progress_callback(logfile.tell() / logfile_size)
                     if isinstance(f, http.HTTPFlow):
                         if f.response is None:
-                            print("[warn] flow without response: {}".format(f.request.url))
+                            print(
+                                "[warn] flow without response: {}".format(f.request.url)
+                            )
                             continue
                         yield MitmproxyFlowWrapper(f)
             except FlowReadException as e:
                 print(f"Flow file corrupted: {e}")
+
     def name(self):
         return "flow"
