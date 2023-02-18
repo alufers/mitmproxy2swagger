@@ -18,10 +18,18 @@ import urllib
 
 def path_to_regex(path):
     # replace the path template with a regex
+    path = path.replace('\\', '\\\\')
     path = path.replace('{', '(?P<')
     path = path.replace('}', '>[^/]+)')
     path = path.replace('*', '.*')
     path = path.replace('/', '\\/')
+    path = path.replace('?', '\\?')
+    path = path.replace('(', '\\(')
+    path = path.replace(')', '\\)')
+    path = path.replace('.', '\\.')
+    path = path.replace('+', '\\+')
+    path = path.replace('[', '\\[')
+    path = path.replace(']', '\\]')
     return "^" + path + "$"
 
 
@@ -66,13 +74,13 @@ def main():
 
     yaml = ruamel.yaml.YAML()
 
-    caputre_reader = None
+    capture_reader = None
     if args.format == 'flow' or args.format == 'mitmproxy':
-        caputre_reader = MitmproxyCaptureReader(args.input, progress_callback)
+        capture_reader = MitmproxyCaptureReader(args.input, progress_callback)
     elif args.format == 'har':
-        caputre_reader = HarCaptureReader(args.input, progress_callback)
+        capture_reader = HarCaptureReader(args.input, progress_callback)
     else:
-        caputre_reader = detect_input_format(args.input)
+        capture_reader = detect_input_format(args.input)
 
     swagger = None
 
@@ -121,12 +129,15 @@ def main():
 
     # new endpoints will be added here so that they can be added as comments in the swagger file
     new_path_templates = []
-
+    for path in path_templates:
+        print("Compiling path " + path)
+        print("Compiled to regex: " + path_to_regex(path))
+        re.compile(path_to_regex(path))
     path_template_regexes = [re.compile(path_to_regex(path))
-                             for path in path_templates]
+                            for path in path_templates]
 
     try:
-        for f in caputre_reader.captured_requests():
+        for f in capture_reader.captured_requests():
             # strip the api prefix from the url
             url = f.get_url()
             if not url.startswith(args.api_prefix):
@@ -231,7 +242,7 @@ def main():
     except FlowReadException as e:
         print(f"Flow file corrupted: {e}")
         traceback.print_exception(*sys.exc_info())
-        print(f"{console_util.ANSI_RED}Failed to parse the input file as '{caputre_reader.name()}'. ")
+        print(f"{console_util.ANSI_RED}Failed to parse the input file as '{capture_reader.name()}'. ")
         if not args.format:
             print(f"It might happen that the input format as incorrectly detected. Please try using '--format flow' or '--format har' to specify the input format.{console_util.ANSI_RESET}")
         sys.exit(1)
@@ -239,7 +250,7 @@ def main():
         print(f"ValueError: {e}")
         # print stack trace
         traceback.print_exception(*sys.exc_info())
-        print(f"{console_util.ANSI_RED}Failed to parse the input file as '{caputre_reader.name()}'. ")
+        print(f"{console_util.ANSI_RED}Failed to parse the input file as '{capture_reader.name()}'. ")
         if not args.format:
             print(f"It might happen that the input format as incorrectly detected. Please try using '--format flow' or '--format har' to specify the input format.{console_util.ANSI_RESET}")
         sys.exit(1)
