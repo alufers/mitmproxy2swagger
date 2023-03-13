@@ -10,7 +10,7 @@ license = "MIT"
 python = "^3.9"
 mitmproxy = "^9.0.1"
 "ruamel.yaml" = "^0.17.21"
-json-stream = "^1.4.0"
+json-stream = "^2.2.0"
 
 [tool.poetry.dev-dependencies]
 
