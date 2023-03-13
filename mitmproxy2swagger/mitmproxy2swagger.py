@@ -152,8 +152,6 @@ def main():
     # new endpoints will be added here so that they can be added as comments in the swagger file
     new_path_templates = []
     for path in path_templates:
-        print("Compiling path " + path)
-        print("Compiled to regex: " + path_to_regex(path))
         re.compile(path_to_regex(path))
     path_template_regexes = [re.compile(path_to_regex(path)) for path in path_templates]
 
