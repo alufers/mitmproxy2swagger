@@ -6,3 +6,4 @@ dist
 dupsko.yaml
 dist
 /.mypy_cache/
+.DS_Store
