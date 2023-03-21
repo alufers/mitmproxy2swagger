@@ -26,6 +26,10 @@ First you will need python3 and pip3.
 $ pip install mitmproxy2swagger 
 # ... or ...
 $ pip3 install mitmproxy2swagger
+# ... or ...
+$ git clone git@github.com:alufers/mitmproxy2swagger.git
+$ cd mitmproxy2swagger
+$ docker build -t mitmproxy2swagger .
 ```
 
 Then clone the repo and run `mitmproxy2swagger` as per examples below.
@@ -58,6 +62,8 @@ To create a specification by inspecting HTTP traffic you will need to:
 
     ```bash
     $ mitmproxy2swagger -i <path_to_mitmptoxy_flow> -o <path_to_output_schema> -p <api_prefix>
+    # ... or ...
+    $ docker run -it -v $PWD:/app mitmproxy2swagger mitmproxy2swagger -i <path_to_mitmptoxy_flow> -o <path_to_output_schema> -p <api_prefix>
     ```
 
     Please note that you can use an existing schema, in which case the existing schema will be extended with the new data. You can also run it a few times with different flow captures, the captured data will be safely merged.
@@ -94,6 +100,8 @@ To create a specification by inspecting HTTP traffic you will need to:
 
     ```bash
     $ mitmproxy2swagger -i <path_to_mitmptoxy_flow> -o <path_to_output_schema> -p <api_prefix> [--examples]
+    # ... or ...
+    $ docker run -it -v $PWD:/app mitmproxy2swagger mitmproxy2swagger -i <path_to_mitmptoxy_flow> -o <path_to_output_schema> -p <api_prefix> [--examples]
     ```
 
     Run the command a second time (with the same schema file). It will pick up the edited lines and generate endpoint descriptions. 
