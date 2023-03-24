@@ -1,8 +1,10 @@
-FROM python:3.10
+FROM python:3.10-alpine
 
 WORKDIR /app
 
-RUN apt update -qq && \
+RUN apk update && \
+    apk upgrade && \
+    apk add gcc libc-dev libffi-dev cargo && \
     python -m pip install --upgrade pip && \
     pip install poetry 
 
