@@ -2,8 +2,8 @@
 name: Create and publish a Docker image to GitHub Registry
 
 on:
-  push:
-    branches: ['release']
+  release:
+    types: [published]
 
 jobs:
   build-and-push-image:
