@@ -109,6 +109,7 @@ To create a specification by inspecting HTTP traffic you will need to:
     Please note that mitmproxy2swagger will not overwrite existing endpoint descriptions, if you want to overwrite them, you can delete them before running the second pass.
 
     Passing `--examples` will add example data to requests and responses. Take caution when using this option, as it may add sensitive data (tokens, passwords, personal information etc.) to the schema.
+    Passing `--headers` will add headers data to requests and responses. Take caution when using this option, as it may add sensitive data (tokens, passwords, personal information etc.) to the schema.
 
 ### HAR
 
