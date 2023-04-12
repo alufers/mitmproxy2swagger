@@ -165,8 +165,9 @@ def main():
     try:
         for f in capture_reader.captured_requests():
             # strip the api prefix from the url
-            url = f.get_url()
-            if not url.startswith(args.api_prefix):
+            url = f.get_matching_url(args.api_prefix)
+           
+            if url is None:
                 continue
             method = f.get_method().lower()
             path = strip_query_string(url).removeprefix(args.api_prefix)

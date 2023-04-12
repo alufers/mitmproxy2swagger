@@ -2,7 +2,8 @@ from typing import Iterator
 from mitmproxy import io as iom, http
 from mitmproxy.exceptions import FlowReadException
 import os
-
+import typing
+from urllib.parse import urlparse
 
 def mitmproxy_dump_file_huristic(file_path: str) -> int:
     val = 0
@@ -31,13 +32,36 @@ class MitmproxyFlowWrapper:
     def __init__(self, flow: http.HTTPFlow):
         self.flow = flow
 
-    def get_url(self):
+    def get_url(self) -> str:
         return self.flow.request.url
 
-    def get_method(self):
+    def get_matching_url(self, prefix) -> typing.Union[str, None]:
+        """
+            Get the requests URL if the prefix matches the URL, None otherwise
+
+            This takes into account a quirk of mitmproxy where it sometimes puts the
+            raw IP address in the URL instead of the hostname. Then the hostname is
+            in the Host header.
+        """
+        if self.flow.request.url.startswith(prefix):
+            return self.flow.request.url
+        # All the stuff where the real hostname could be
+        replacement_hostnames = [
+            self.flow.request.headers.get("Host", ""),
+            self.flow.request.host_header,
+            self.flow.request.host
+        ]
+        for replacement_hostname in replacement_hostnames:
+            if replacement_hostname is not None and replacement_hostname != "":
+                fixed_url = urlparse(self.flow.request.url)._replace(netloc=replacement_hostname).geturl()
+                if fixed_url.startswith(prefix):
+                    return fixed_url
+        return None
+
+    def get_method(self) -> str:
         return self.flow.request.method
 
-    def get_request_headers(self):
+    def get_request_headers(self) -> dict:
         headers = {}
         for k, v in self.flow.request.headers.items(multi=True):
             # create list on key if it does not exist
