@@ -34,7 +34,7 @@ mitmproxy2swagger = 'mitmproxy2swagger.mitmproxy2swagger:main'
 [tool.black]
 line-length = 88
 target-version = ['py310']
-include = 'mitmproxy2swagger/(.*)\.pyi?$'
+
 
 [tool.flake8]
 max-line-length = 120

@@ -90,11 +90,14 @@ class HarFlowWrapper:
             and "content" in self.flow["response"]
             and "text" in self.flow["response"]["content"]
         ):
-            if (
-                "encoding" in self.flow["response"]["content"]
-                and self.flow["response"]["content"]["encoding"] == "base64"
-            ):
-                return b64decode(self.flow["response"]["content"]["text"]).decode()
+            try:
+                if (
+                    "encoding" in self.flow["response"]["content"]
+                    and self.flow["response"]["content"]["encoding"] == "base64"
+                ):
+                    return b64decode(self.flow["response"]["content"]["text"]).decode()
+            except UnicodeDecodeError:
+                return None
             return self.flow["response"]["content"]["text"]
         return None
 

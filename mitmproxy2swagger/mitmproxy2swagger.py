@@ -8,6 +8,7 @@ import re
 import sys
 import traceback
 import urllib
+from typing import Any, Sequence
 
 import ruamel.yaml
 from mitmproxy.exceptions import FlowReadException
@@ -62,7 +63,7 @@ def detect_input_format(file_path):
     return MitmproxyCaptureReader(file_path, progress_callback)
 
 
-def main():
+def main(override_args: Sequence[str] | None = None):
     parser = argparse.ArgumentParser(
         description="Converts a mitmproxy dump file or HAR to a swagger schema."
     )
@@ -97,11 +98,11 @@ def main():
         choices=["flow", "har"],
         help="Override the input file format auto-detection.",
     )
-    args = parser.parse_args()
+    args = parser.parse_args(override_args)
 
     yaml = ruamel.yaml.YAML()
 
-    capture_reader = None
+    capture_reader: MitmproxyCaptureReader | HarCaptureReader
     if args.format == "flow" or args.format == "mitmproxy":
         capture_reader = MitmproxyCaptureReader(args.input, progress_callback)
     elif args.format == "har":
@@ -164,15 +165,15 @@ def main():
     path_template_regexes = [re.compile(path_to_regex(path)) for path in path_templates]
 
     try:
-        for f in capture_reader.captured_requests():
+        for req in capture_reader.captured_requests():
             # strip the api prefix from the url
-            url = f.get_matching_url(args.api_prefix)
+            url = req.get_matching_url(args.api_prefix)
 
             if url is None:
                 continue
-            method = f.get_method().lower()
+            method = req.get_method().lower()
             path = strip_query_string(url).removeprefix(args.api_prefix)
-            status = f.get_response_status_code()
+            status = req.get_response_status_code()
 
             # check if the path matches any of the path templates, and save the index
             path_template_index = None
@@ -203,7 +204,7 @@ def main():
             params = swagger_util.url_to_params(url, path_template_to_set)
             if args.headers:
                 headers_request = swagger_util.request_to_headers(
-                    f.get_request_headers()
+                    req.get_request_headers()
                 )
                 if headers_request is not None and len(headers_request) > 0:
                     set_key_if_not_exists(
@@ -217,13 +218,13 @@ def main():
                 )
 
             if method not in ["get", "head"]:
-                body = f.get_request_body()
+                body = req.get_request_body()
                 if body is not None:
                     body_val = None
                     content_type = None
                     # try to parse the body as json
                     try:
-                        body_val = json.loads(f.get_request_body())
+                        body_val = json.loads(req.get_request_body())
                         content_type = "application/json"
                     except UnicodeDecodeError:
                         pass
@@ -232,7 +233,7 @@ def main():
                     if content_type is None:
                         # try to parse the body as form data
                         try:
-                            body_val_bytes = dict(
+                            body_val_bytes: Any = dict(
                                 urllib.parse.parse_qsl(
                                     body, encoding="utf-8", keep_blank_values=True
                                 )
@@ -268,7 +269,7 @@ def main():
                         )
 
             # try parsing the response as json
-            response_body = f.get_response_body()
+            response_body = req.get_response_body()
             if response_body is not None:
                 try:
                     response_json = json.loads(response_body)
@@ -278,7 +279,7 @@ def main():
                     response_json = None
                 if response_json is not None:
                     resp_data_to_set = {
-                        "description": f.get_response_reason(),
+                        "description": req.get_response_reason(),
                         "headers": None,
                         "content": {
                             "application/json": {
@@ -292,7 +293,7 @@ def main():
                         ] = swagger_util.limit_example_size(response_json)
                     if args.headers:
                         resp_data_to_set["headers"] = swagger_util.response_to_headers(
-                            f.get_response_headers()
+                            req.get_response_headers()
                         )
 
                     set_key_if_not_exists(
