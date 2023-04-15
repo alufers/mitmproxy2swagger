@@ -1,0 +1,7 @@
+testdata
+testcase
+docs
+example_outputs
+.github
+.venv
+.coverage

@@ -29,9 +29,6 @@ jobs:
         uses: abatilo/actions-poetry@f295866fdd47fe14b18927b0908ac25ef3d5009a
         with:
           poetry-version: "1.3.2"
-      - uses: actions/setup-go@v4
-        with:
-          go-version: '>=1.19.0'
       - name: Install dependencies
         run: |
           poetry install
