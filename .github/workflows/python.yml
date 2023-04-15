@@ -38,3 +38,6 @@ jobs:
       - name: Run Python lint checks
         run: |
           poetry run pre-commit run --all-files
+      - name: Run Python tests
+        run: |
+          poetry run pytest
