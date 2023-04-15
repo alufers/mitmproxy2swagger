@@ -7,7 +7,9 @@ repos:
     hooks:
       - id: check-yaml
       - id: end-of-file-fixer
+        exclude: ^testdata/.*
       - id: trailing-whitespace
+        exclude: ^testdata/.*
       - id: check-json
       - id: detect-private-key
       - id: fix-encoding-pragma
