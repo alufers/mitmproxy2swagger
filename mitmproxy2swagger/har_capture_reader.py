@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
 import os
-import json_stream
 from base64 import b64decode
 from typing import Iterator, Union
+
+import json_stream
 
 
 # a heuristic to determine if a file is a har archive
@@ -37,13 +39,14 @@ class HarFlowWrapper:
 
     def get_url(self):
         return self.flow["request"]["url"]
+
     def get_matching_url(self, prefix) -> Union[str, None]:
-        """
-            Get the requests URL if the prefix matches the URL, None otherwise
-        """
+        """Get the requests URL if the prefix matches the URL, None
+        otherwise."""
         if self.flow["request"]["url"].startswith(prefix):
             return self.flow["request"]["url"]
         return None
+
     def get_method(self):
         return self.flow["request"]["method"]
 

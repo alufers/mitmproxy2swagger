@@ -12,7 +12,17 @@ mitmproxy = "^9.0.1"
 "ruamel.yaml" = "^0.17.21"
 json-stream = "^2.2.0"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
+isort = "^5.12.0"
+mypy = "^1.0.1"
+flake8 = "^6.0.0"
+docformatter = {extras = ["tomli"], version = "^1.5.1"}
+flake8-pyproject = "^1.2.2"
+pre-commit = "^3.1.1"
+pytest = "^7.2.1"
+pytest-asyncio = "^0.20.3"
+vermin = "^1.5.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -20,3 +30,22 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 mitmproxy2swagger = 'mitmproxy2swagger.mitmproxy2swagger:main'
+
+[tool.black]
+line-length = 88
+target-version = ['py310']
+include = 'mitmproxy2swagger/(.*)\.pyi?$'
+
+[tool.flake8]
+max-line-length = 120
+extend-ignore = 'E203,E501'
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+python_version = "3.10"
+
+[tool.docformatter]
+recursive = true
+wrap-summaries = 88

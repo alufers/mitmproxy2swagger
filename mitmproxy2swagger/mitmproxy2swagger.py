@@ -1,7 +1,6 @@
 #!/usr/bin/env python
-"""
-Converts a mitmproxy dump file to a swagger schema.
-"""
+# -*- coding: utf-8 -*-
+"""Converts a mitmproxy dump file to a swagger schema."""
 import argparse
 import json
 import os
@@ -14,8 +13,11 @@ import ruamel.yaml
 from mitmproxy.exceptions import FlowReadException
 
 from mitmproxy2swagger import console_util, swagger_util
-from mitmproxy2swagger.har_capture_reader import har_archive_heuristic, HarCaptureReader
-from mitmproxy2swagger.mitmproxy_capture_reader import mitmproxy_dump_file_huristic, MitmproxyCaptureReader
+from mitmproxy2swagger.har_capture_reader import HarCaptureReader, har_archive_heuristic
+from mitmproxy2swagger.mitmproxy_capture_reader import (
+    MitmproxyCaptureReader,
+    mitmproxy_dump_file_huristic,
+)
 
 
 def path_to_regex(path):
@@ -118,7 +120,6 @@ def main():
             swagger = yaml.load(f)
     except FileNotFoundError:
         print("No existing swagger file found. Creating new one.")
-        pass
     if swagger is None:
         swagger = ruamel.yaml.comments.CommentedMap(
             {
@@ -166,7 +167,7 @@ def main():
         for f in capture_reader.captured_requests():
             # strip the api prefix from the url
             url = f.get_matching_url(args.api_prefix)
-           
+
             if url is None:
                 continue
             method = f.get_method().lower()
@@ -201,12 +202,14 @@ def main():
 
             params = swagger_util.url_to_params(url, path_template_to_set)
             if args.headers:
-                headers_request = swagger_util.request_to_headers(f.get_request_headers())
+                headers_request = swagger_util.request_to_headers(
+                    f.get_request_headers()
+                )
                 if headers_request is not None and len(headers_request) > 0:
                     set_key_if_not_exists(
                         swagger["paths"][path_template_to_set][method],
                         "parameters",
-                        headers_request
+                        headers_request,
                     )
             if params is not None and len(params) > 0:
                 set_key_if_not_exists(
@@ -288,7 +291,9 @@ def main():
                             "example"
                         ] = swagger_util.limit_example_size(response_json)
                     if args.headers:
-                        resp_data_to_set["headers"] = swagger_util.response_to_headers(f.get_response_headers())
+                        resp_data_to_set["headers"] = swagger_util.response_to_headers(
+                            f.get_response_headers()
+                        )
 
                     set_key_if_not_exists(
                         swagger["paths"][path_template_to_set][method]["responses"],

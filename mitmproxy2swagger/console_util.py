@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import sys
 
 ANSI_RGB = "\033[38;2;{};{};{}m"

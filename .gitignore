@@ -10,3 +10,4 @@ dist
 .idea
 flow*
 swagger
+.vscode

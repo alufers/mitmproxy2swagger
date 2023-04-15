@@ -1,0 +1,61 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+exclude: ^(api_protobuf/.*|docs/protobuf_docs\.md|dhaul_openapi/messages/.*)$
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-json
+      - id: detect-private-key
+      - id: fix-encoding-pragma
+      - id: check-merge-conflict
+      - id: check-added-large-files
+  - repo: https://github.com/psf/black
+    rev: 23.1.0
+    hooks:
+      - id: black
+        args: [--config=pyproject.toml]
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: "v1.0.1"
+    hooks:
+      - id: mypy
+  - repo: https://github.com/PyCQA/docformatter
+    rev: v1.5.1
+    hooks:
+      - id: docformatter
+        args:
+          - --in-place
+          - --config=pyproject.toml
+  - repo: https://github.com/PyCQA/autoflake
+    rev: v2.0.1
+    hooks:
+      - id: autoflake
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+        entry: pflake8
+        additional_dependencies: [pyproject-flake8]
+  - repo: https://github.com/netromdk/vermin
+    rev: v1.5.1
+    hooks:
+      - id: vermin
+        # specify your target version here, OR in a Vermin config file as usual:
+        args: ["-t=3.9-", "--violations"]
+        # (if your target is specified in a Vermin config, you may omit the 'args' entry entirely)
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.29.0
+    hooks:
+      - id: yamllint
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.33.0
+    hooks:
+      - id: markdownlint-fix
+      - id: markdownlint

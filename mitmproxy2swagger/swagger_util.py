@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import urllib
 
 VERBS = [
@@ -104,9 +105,7 @@ def response_to_headers(headers):
         for key in headers:
             header[key] = {
                 "description": headers[key][0],
-                "schema": {
-                    "type": "number" if headers[key][0].isdigit() else "string"
-                },
+                "schema": {"type": "number" if headers[key][0].isdigit() else "string"},
             }
     return header
 
