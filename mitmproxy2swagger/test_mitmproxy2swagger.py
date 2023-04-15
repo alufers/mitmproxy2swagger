@@ -3,12 +3,12 @@ import sys
 
 import ruamel.yaml as ruamel
 
-from mitmproxy2swagger.test_util import get_nested_key, mitmproxy2swagger_e2e_test
+from .testing_util import get_nested_key, mitmproxy2swagger_e2e_test
 
 
 def test_mitmproxy2swagger_generates_swagger_from_har():
     data = mitmproxy2swagger_e2e_test(
-        "testdata/sklep.lisek.app.har", "https://sklep.lisek.app/"
+        "testdata/sklep.lisek.app.har", "https://api2.lisek.app/"
     )
     assert data is not None
     assert "paths" in data
@@ -31,8 +31,6 @@ def test_mitmproxy2swagger_generates_swagger_from_mitmproxy_flow_file():
     )
     assert data is not None
     assert "paths" in data
-    yaml = ruamel.YAML()
-    yaml.dump(data, sys.stdout)
     assert len(data["paths"]) == 3  # 4 paths in the test file
     assert get_nested_key(data, "paths./get.get.responses.200.content") is not None
 
