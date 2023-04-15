@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-import sys
 
-import ruamel.yaml as ruamel
 
 from .testing_util import get_nested_key, mitmproxy2swagger_e2e_test
 
