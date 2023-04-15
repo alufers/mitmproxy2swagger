@@ -5,7 +5,7 @@ ENV PYTHONFAULTHANDLER=1 \
 FROM python:3.10-alpine AS builder
 ENV PIP_DEFAULT_TIMEOUT=100 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    PIP_NO_CACHE_DIR=1 
+    PIP_NO_CACHE_DIR=1
 WORKDIR /app
 RUN apk update && \
     apk upgrade && \
