@@ -280,7 +280,6 @@ def main(override_args: Sequence[str] | None = None):
                 if response_json is not None:
                     resp_data_to_set = {
                         "description": req.get_response_reason(),
-                        "headers": None,
                         "content": {
                             "application/json": {
                                 "schema": swagger_util.value_to_schema(response_json)

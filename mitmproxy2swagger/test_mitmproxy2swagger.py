@@ -1,17 +1,30 @@
-import os
-from .mitmproxy2swagger import main
+# -*- coding: utf-8 -*-
+import sys
 import tempfile
-import ruamel.yaml as ruamel
 from typing import Any, List
+
+import ruamel.yaml as ruamel
+
+from .mitmproxy2swagger import main
+
+
+def get_nested_key(obj: Any, path: str) -> Any:
+    """Gets a nested key from a dict."""
+    keys = path.split(".")
+    for key in keys:
+        if not isinstance(obj, dict):
+            return None
+        if key not in obj:
+            return None
+        obj = obj[key]
+    return obj
 
 
 def mitmproxy2swagger_e2e_test(
     input_file: str, url_prefix: str, extra_args: List[str] | None = None
 ) -> Any:
-    """
-    Runs mitmproxy2swagger on the given input file twice,
-    and returns the detected endpoints.
-    """
+    """Runs mitmproxy2swagger on the given input file twice, and returns the
+    detected endpoints."""
     yaml_tmp_path = tempfile.mktemp(suffix=".yaml", prefix="sklep.lisek.")
     main(
         [
@@ -62,7 +75,6 @@ def mitmproxy2swagger_e2e_test(
 
 
 def test_mitmproxy2swagger_generates_swagger_from_har():
-
     data = mitmproxy2swagger_e2e_test(
         "testdata/sklep.lisek.app.har", "https://sklep.lisek.app/"
     )
@@ -77,13 +89,51 @@ def test_mitmproxy2swagger_generates_swagger_from_har():
 
 
 def test_mitmproxy2swagger_generates_swagger_from_mitmproxy_flow_file():
-    data = mitmproxy2swagger_e2e_test("testdata/test_flows", "https://httpbin.org/", [
-        "--format",
-        "flow",
-        "--headers",
-    ])
+    data = mitmproxy2swagger_e2e_test(
+        "testdata/test_flows",
+        "https://httpbin.org/",
+        [
+            "--format",
+            "flow",
+        ],
+    )
     assert data is not None
     assert "paths" in data
+    yaml = ruamel.YAML()
+    yaml.dump(data, sys.stdout)
     assert len(data["paths"]) == 3  # 4 paths in the test file
+    assert get_nested_key(data, "paths./get.get.responses.200.content") is not None
 
-    
+
+def test_mitmproxy2swagger_generates_swagger_from_mitmproxy_flow_file_with_form_data():
+    data = mitmproxy2swagger_e2e_test(
+        "testdata/form_data_flows",
+        "https://httpbin.org/",
+        [
+            "--format",
+            "flow",
+        ],
+    )
+    assert data is not None
+
+    assert (
+        get_nested_key(
+            data,
+            "paths./post.post.requestBody.content.application/x-www-form-urlencoded.schema",
+        )
+        is not None
+    )
+
+
+def test_mitmproxy2swagger_generates_headers_for_flow_files():
+    data = mitmproxy2swagger_e2e_test(
+        "testdata/form_data_flows",
+        "https://httpbin.org/",
+        [
+            "--format",
+            "flow",
+            "--headers",
+        ],
+    )
+    assert data is not None
+    assert get_nested_key(data, "paths./post.post.responses.200.headers.content-type") is not None

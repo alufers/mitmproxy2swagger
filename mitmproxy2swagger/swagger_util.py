@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import urllib
+from typing import Any, List
 
 VERBS = [
     "add",
@@ -79,24 +80,22 @@ def url_to_params(url, path_template):
     return params
 
 
-# when given an url and its path template, generates the parameters section of the request
-def request_to_headers(headers):
-    header = []
+def request_to_headers(headers: dict[str, List[Any]], add_example: bool = False):
+    """When given an url and its path template, generates the parameters
+    section of the request."""
+    params = []
     if headers:
         for key in headers:
-            header.append(
-                {
-                    "name": key,
-                    "value": headers[key][0],
-                    "default": headers[key][0],
-                    "in": "header",
-                    "required": True,
-                    "schema": {
-                        "type": "number" if headers[key][0].isdigit() else "string"
-                    },
-                }
-            )
-    return header
+            h = {
+                "name": key,
+                "in": "header",
+                "required": False,
+                "schema": {"type": "number" if headers[key][0].isdigit() else "string"},
+            }
+            if add_example:
+                h["example"] = headers[key][0]
+            params.append(h)
+    return params
 
 
 def response_to_headers(headers):
