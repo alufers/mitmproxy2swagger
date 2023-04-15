@@ -300,6 +300,21 @@ def main(override_args: Sequence[str] | None = None):
                         str(status),
                         resp_data_to_set,
                     )
+            if (
+                "responses" in swagger["paths"][path_template_to_set][method]
+                and len(swagger["paths"][path_template_to_set][method]["responses"])
+                == 0
+            ):
+                # add a default response if there were no responses detected,
+                # this is for compliance with the OpenAPI spec
+                content_type = (
+                    req.get_response_headers().get("content-type") or "text/plain"
+                )
+
+                swagger["paths"][path_template_to_set][method]["responses"]["200"] = {
+                    "description": "OK",
+                    "content": {content_type: {}},
+                }
 
     except FlowReadException as e:
         print(f"Flow file corrupted: {e}")
