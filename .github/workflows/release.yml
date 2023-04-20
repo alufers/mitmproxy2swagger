@@ -38,7 +38,6 @@ jobs:
       - name: Run Python tests
         run: |
           poetry run pytest --cov
-      -
       - name: Git configuration
         run: |
           git config --global user.email "bot@example.com"
