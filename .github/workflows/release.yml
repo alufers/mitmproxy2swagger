@@ -1,0 +1,82 @@
+name: Release package
+on:
+  workflow_dispatch:
+    inputs:
+      release-type:
+        type: choice
+        description: 'Release type (one of): patch, minor, major, prepatch, preminor, premajor, prerelease'
+        default: 'patch'
+        options:
+          - 'patch'
+          - 'minor'
+          - 'major'
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout project repository
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - name: Install poetry
+        uses: abatilo/actions-poetry@f295866fdd47fe14b18927b0908ac25ef3d5009a
+        with:
+          poetry-version: "1.3.2"
+      - name: Install dependencies
+        run: |
+          poetry install
+      - name: Run Python lint checks
+        run: |
+          poetry run pre-commit run --all-files
+      - name: Run Python tests
+        run: |
+          poetry run pytest --cov
+      -
+      - name: Git configuration
+        run: |
+          git config --global user.email "bot@example.com"
+          git config --global user.name "GitHub Actions"
+      - name: Bump release version
+        run: |
+          poetry version ${{ github.event.inputs.release-type }}
+          echo "NEW_VERSION=$(poetry version --short)" >> $GITHUB_ENV
+        env:
+          RELEASE_TYPE: ${{ github.event.inputs.release-type }}
+      - name: Build package
+        run: |
+          poetry build
+      - name: Commit pyproject.toml and poetry.lock
+        run: |
+          git add pyproject.toml poetry.lock
+          git commit -m "chore: release ${{ env.NEW_VERSION }}"
+          git tag ${{ env.NEW_VERSION }}
+      - name: Build docker image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          push: false
+          platforms: linux/amd64
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+      # Push repository changes
+      - uses: stefanzweifel/git-auto-commit-action@v4
+      - name: Publish package
+        run: |
+          poetry publish --build
+        env:
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
+      - name: Push docker image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          push: false
+          platforms: linux/amd64
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
