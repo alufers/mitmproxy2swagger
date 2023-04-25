@@ -3,7 +3,7 @@
 exclude: ^(api_protobuf/.*|docs/protobuf_docs\.md|dhaul_openapi/messages/.*)$
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.2.0
+    rev: v4.4.0
     hooks:
       - id: check-yaml
       - id: end-of-file-fixer
@@ -16,7 +16,7 @@ repos:
       - id: check-merge-conflict
       - id: check-added-large-files
   - repo: https://github.com/psf/black
-    rev: 23.1.0
+    rev: 23.3.0
     hooks:
       - id: black
         args: [--config=pyproject.toml]
@@ -25,18 +25,18 @@ repos:
     hooks:
       - id: isort
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.0.1"
+    rev: "v1.2.0"
     hooks:
       - id: mypy
   - repo: https://github.com/PyCQA/docformatter
-    rev: v1.5.1
+    rev: v1.6.3
     hooks:
       - id: docformatter
         args:
           - --in-place
           - --config=pyproject.toml
   - repo: https://github.com/PyCQA/autoflake
-    rev: v2.0.1
+    rev: v2.1.1
     hooks:
       - id: autoflake
   - repo: https://github.com/pycqa/flake8
@@ -53,7 +53,7 @@ repos:
         args: ["-t=3.9-", "--violations"]
         # (if your target is specified in a Vermin config, you may omit the 'args' entry entirely)
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.29.0
+    rev: v1.31.0
     hooks:
       - id: yamllint
   - repo: https://github.com/igorshubovych/markdownlint-cli
