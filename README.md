@@ -125,6 +125,44 @@ See the [examples](./example_outputs/). You will find a generated schema there a
 
 See the generated html file [here](https://raw.githack.com/alufers/mitmproxy2swagger/master/example_outputs/lisek-static.html).
 
+## Development and contributing
+
+This project uses:
+
+- [poetry](https://python-poetry.org/) for dependency management
+- [pre-commit](https://pre-commit.com/) for code formatting and linting
+- [pytest](https://docs.pytest.org/en/stable/) for unit testing
+
+To install the dependencies:
+
+```bash
+poetry install
+```
+
+Run linters:
+
+```bash
+pre-commit run --all-files
+```
+
+Install pre-commit hooks:
+
+```bash
+pre-commit install
+```
+
+Run tests:
+
+```bash
+poetry run pytest
+```
+
+Run tests with coverage:
+
+```bash
+poetry run pytest --cov=mitmproxy2swagger
+```
+
 ## License
 
 MIT
