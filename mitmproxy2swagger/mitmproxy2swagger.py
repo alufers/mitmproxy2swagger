@@ -313,7 +313,7 @@ def main(override_args: Sequence[str] | None = None):
 
                 swagger["paths"][path_template_to_set][method]["responses"]["200"] = {
                     "description": "OK",
-                    "content": ("content-type", ""),
+                    "content": {},
                 }
 
     except FlowReadException as e:
