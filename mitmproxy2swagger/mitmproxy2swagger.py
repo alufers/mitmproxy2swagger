@@ -8,7 +8,7 @@ import re
 import sys
 import traceback
 import urllib
-from typing import Any, Sequence
+from typing import Any, Optional, Sequence, Union
 
 import ruamel.yaml
 from mitmproxy.exceptions import FlowReadException
@@ -63,7 +63,7 @@ def detect_input_format(file_path):
     return MitmproxyCaptureReader(file_path, progress_callback)
 
 
-def main(override_args: Sequence[str] | None = None):
+def main(override_args: Optional[Sequence[str]] = None):
     parser = argparse.ArgumentParser(
         description="Converts a mitmproxy dump file or HAR to a swagger schema."
     )
@@ -102,7 +102,7 @@ def main(override_args: Sequence[str] | None = None):
 
     yaml = ruamel.yaml.YAML()
 
-    capture_reader: MitmproxyCaptureReader | HarCaptureReader
+    capture_reader: Union[MitmproxyCaptureReader, HarCaptureReader]
     if args.format == "flow" or args.format == "mitmproxy":
         capture_reader = MitmproxyCaptureReader(args.input, progress_callback)
     elif args.format == "har":
