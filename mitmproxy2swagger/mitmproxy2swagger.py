@@ -115,7 +115,9 @@ def main(override_args: Optional[Sequence[str]] = None):
     try:
         args.param_regex = re.compile("^" + args.param_regex + "$")
     except re.error as e:
-        print(f"{console_util.ANSI_RED}Invalid path parameter regex: {e}{console_util.ANSI_RESET}")
+        print(
+            f"{console_util.ANSI_RED}Invalid path parameter regex: {e}{console_util.ANSI_RESET}"
+        )
         sys.exit(1)
 
     yaml = ruamel.yaml.YAML()
