@@ -23,18 +23,10 @@ from mitmproxy2swagger.mitmproxy_capture_reader import (
 
 def path_to_regex(path):
     # replace the path template with a regex
-    path = path.replace("\\", "\\\\")
-    path = path.replace("{", "(?P<")
-    path = path.replace("}", ">[^/]+)")
-    path = path.replace("*", ".*")
-    path = path.replace("/", "\\/")
-    path = path.replace("?", "\\?")
-    path = path.replace("(", "\\(")
-    path = path.replace(")", "\\)")
-    path = path.replace(".", "\\.")
-    path = path.replace("+", "\\+")
-    path = path.replace("[", "\\[")
-    path = path.replace("]", "\\]")
+    path = re.escape(path)
+    path = path.replace(r"\{", "(?P<")
+    path = path.replace(r"\}", ">[^/]+)")
+    path = path.replace(r"\*", ".*")
     return "^" + path + "$"
 
 
@@ -160,8 +152,6 @@ def main(override_args: Optional[Sequence[str]] = None):
 
     # new endpoints will be added here so that they can be added as comments in the swagger file
     new_path_templates = []
-    for path in path_templates:
-        re.compile(path_to_regex(path))
     path_template_regexes = [re.compile(path_to_regex(path)) for path in path_templates]
 
     try:
