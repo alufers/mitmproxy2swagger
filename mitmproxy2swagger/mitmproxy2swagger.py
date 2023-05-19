@@ -98,7 +98,25 @@ def main(override_args: Optional[Sequence[str]] = None):
         choices=["flow", "har"],
         help="Override the input file format auto-detection.",
     )
+    parser.add_argument(
+        "-r",
+        "--param-regex",
+        default="[0-9]+",
+        help="Regex to match parameters in the API paths. Path segments that match this regex will be turned into parameter placeholders.",
+    )
+    parser.add_argument(
+        "-s",
+        "--suppress-params",
+        action="store_true",
+        help="Do not include API paths that have the original parameter values, only the ones with placeholders.",
+    )
     args = parser.parse_args(override_args)
+
+    try:
+        args.param_regex = re.compile("^" + args.param_regex + "$")
+    except re.error as e:
+        print(f"{console_util.ANSI_RED}Invalid path parameter regex: {e}{console_util.ANSI_RESET}")
+        sys.exit(1)
 
     yaml = ruamel.yaml.YAML()
 
@@ -340,20 +358,24 @@ def main(override_args: Optional[Sequence[str]] = None):
             )
         sys.exit(1)
 
+    def is_param(param_value):
+        return args.param_regex.match(param_value) is not None
+
     new_path_templates.sort()
 
     # add suggested path templates
     # basically inspects urls and replaces segments containing only numbers with a parameter
     new_path_templates_with_suggestions = []
-    for idx, path in enumerate(new_path_templates):
+    for path in new_path_templates:
         # check if path contains number-only segments
         segments = path.split("/")
-        if any(segment.isdigit() for segment in segments):
+        has_param = any(is_param(segment) for segment in segments)
+        if has_param:
             # replace digit segments with {id}, {id1}, {id2} etc
             new_segments = []
             param_id = 0
             for segment in segments:
-                if segment.isdigit():
+                if is_param(segment):
                     param_name = "id" + str(param_id)
                     if param_id == 0:
                         param_name = "id"
@@ -365,7 +387,9 @@ def main(override_args: Optional[Sequence[str]] = None):
             # prepend the suggested path to the new_path_templates list
             if suggested_path not in new_path_templates_with_suggestions:
                 new_path_templates_with_suggestions.append("ignore:" + suggested_path)
-        new_path_templates_with_suggestions.append("ignore:" + path)
+
+        if not has_param or not args.suppress_params:
+            new_path_templates_with_suggestions.append("ignore:" + path)
 
     # remove the ending comments not to add them twice
 
