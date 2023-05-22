@@ -517,19 +517,19 @@ files = [
 
 [[package]]
 name = "docformatter"
-version = "1.7.0"
+version = "1.7.1"
 description = "Formats docstrings to follow PEP 257"
 category = "dev"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "docformatter-1.7.0-py3-none-any.whl", hash = "sha256:8099de46392970f63eacfc69143b23dd78f6d6511ff8e9f474aba70f80d2e312"},
-    {file = "docformatter-1.7.0.tar.gz", hash = "sha256:13bc8805b3bf4f8a0911fe87c3ea58c7bfc0d5739a2d86bb339efab3932ae49b"},
+    {file = "docformatter-1.7.1-py3-none-any.whl", hash = "sha256:23ce0b5a540d14c420bb0f7ebef4299041a76d008ac92e50fe71937ca9e56c02"},
+    {file = "docformatter-1.7.1.tar.gz", hash = "sha256:34644db7d9781bde65a729c023940de26b61a39e3432eb35e9de3ddfe25d740a"},
 ]
 
 [package.dependencies]
 charset_normalizer = ">=3.0.0,<4.0.0"
-tomli = {version = ">=2.0.0,<3.0.0", optional = true, markers = "extra == \"tomli\""}
+tomli = {version = ">=2.0.0,<3.0.0", optional = true, markers = "python_version < \"3.11\" and extra == \"tomli\""}
 untokenize = ">=0.1.1,<0.2.0"
 
 [package.extras]
