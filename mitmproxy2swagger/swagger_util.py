@@ -81,8 +81,8 @@ def url_to_params(url, path_template):
 
 
 def request_to_headers(headers: dict[str, List[Any]], add_example: bool = False):
-    """When given an url and its path template, generates the parameters
-    section of the request."""
+    """When given an url and its path template, generates the parameters section of the
+    request."""
     params = []
     if headers:
         for key in headers:
