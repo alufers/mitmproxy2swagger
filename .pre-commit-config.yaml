@@ -29,7 +29,7 @@ repos:
     hooks:
       - id: mypy
   - repo: https://github.com/PyCQA/docformatter
-    rev: v1.6.5
+    rev: v1.7.1
     hooks:
       - id: docformatter
         args:
@@ -53,7 +53,7 @@ repos:
         args: ["-t=3.9-", "--violations"]
         # (if your target is specified in a Vermin config, you may omit the 'args' entry entirely)
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.31.0
+    rev: v1.32.0
     hooks:
       - id: yamllint
   - repo: https://github.com/igorshubovych/markdownlint-cli

@@ -41,8 +41,7 @@ class HarFlowWrapper:
         return self.flow["request"]["url"]
 
     def get_matching_url(self, prefix) -> Union[str, None]:
-        """Get the requests URL if the prefix matches the URL, None
-        otherwise."""
+        """Get the requests URL if the prefix matches the URL, None otherwise."""
         if self.flow["request"]["url"].startswith(prefix):
             return self.flow["request"]["url"]
         return None
