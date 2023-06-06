@@ -23,8 +23,8 @@ def get_nested_key(obj: Any, path: str) -> Any:
 def mitmproxy2swagger_e2e_test(
     input_file: str, url_prefix: str, extra_args: Optional[List[str]] = None
 ) -> Any:
-    """Runs mitmproxy2swagger on the given input file twice, and returns the detected
-    endpoints."""
+    """Runs mitmproxy2swagger on the given input file twice, and returns the
+    detected endpoints."""
     yaml_tmp_path = tempfile.mktemp(suffix=".yaml", prefix="sklep.lisek.")
     main(
         [
