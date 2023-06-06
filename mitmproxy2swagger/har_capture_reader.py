@@ -46,7 +46,7 @@ class HarFlowWrapper:
             return self.flow["request"]["url"]
         return None
 
-    def get_method(self):
+    def get_method(self):     
         return self.flow["request"]["method"]
 
     def get_request_headers(self):
