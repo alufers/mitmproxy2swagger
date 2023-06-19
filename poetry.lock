@@ -744,17 +744,17 @@ i18n = ["Babel (>=2.7)"]
 
 [[package]]
 name = "json-stream"
-version = "2.3.0"
+version = "2.3.1"
 description = "Streaming JSON encoder and decoder"
 optional = false
 python-versions = "<4,>=3.5"
 files = [
-    {file = "json-stream-2.3.0.tar.gz", hash = "sha256:3300e95f7212271a34026dedfeeb940bc193c9916e5051add60ec1793635cffd"},
-    {file = "json_stream-2.3.0-py3-none-any.whl", hash = "sha256:411034b77e0c10d6f83ffe541debcf5f26712cf9433749477651c3cd58c415fb"},
+    {file = "json-stream-2.3.1.tar.gz", hash = "sha256:5c36fb544be702c71a6b081364fb5b1a3128d63541223c3e864f50be6e4eecea"},
+    {file = "json_stream-2.3.1-py3-none-any.whl", hash = "sha256:abd2b68934806191aa2d8ca8201a408db832499404a6950895885e8536594dc9"},
 ]
 
 [package.dependencies]
-json-stream-rs-tokenizer = ">=0.4.16"
+json-stream-rs-tokenizer = ">=0.4.17"
 
 [package.extras]
 httpx = ["httpx"]
