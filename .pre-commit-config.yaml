@@ -25,18 +25,18 @@ repos:
     hooks:
       - id: isort
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.3.0"
+    rev: "v1.4.1"
     hooks:
       - id: mypy
   - repo: https://github.com/PyCQA/docformatter
-    rev: v1.7.2
+    rev: v1.7.3
     hooks:
       - id: docformatter
         args:
           - --in-place
           - --config=pyproject.toml
   - repo: https://github.com/PyCQA/autoflake
-    rev: v2.1.1
+    rev: v2.2.0
     hooks:
       - id: autoflake
   - repo: https://github.com/pycqa/flake8
@@ -46,7 +46,7 @@ repos:
         entry: pflake8
         additional_dependencies: [pyproject-flake8]
   - repo: https://github.com/netromdk/vermin
-    rev: v1.5.1
+    rev: v1.5.2
     hooks:
       - id: vermin
         # specify your target version here, OR in a Vermin config file as usual:
@@ -57,7 +57,7 @@ repos:
     hooks:
       - id: yamllint
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.34.0
+    rev: v0.35.0
     hooks:
       - id: markdownlint-fix
       - id: markdownlint
