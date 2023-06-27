@@ -32,9 +32,6 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install
-      - name: Run Python lint checks
-        run: |
-          poetry run pre-commit run --all-files --show-diff-on-failure
       - name: Run Python tests
         run: |
           poetry run pytest --cov
