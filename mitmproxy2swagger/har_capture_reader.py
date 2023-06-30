@@ -16,10 +16,16 @@ def har_archive_heuristic(file_path: str) -> int:
     with open(file_path, "rb") as f:
         data = f.read(2048)
         # if file contains only ascii characters after remove EOL characters
-        if data.decode("utf-8", "ignore").replace("\r", "").replace("\n", "").isprintable() is True:
+        if (
+            data.decode("utf-8", "ignore")
+            .replace("\r", "")
+            .replace("\n", "")
+            .isprintable()
+            is True
+        ):
             val += 25
-        # sign of a JSON file 
-        if data[0:1] == b'{':
+        # sign of a JSON file
+        if data[0:1] == b"{":
             val += 23
         # sign of Chrome OR Firefox export
         if b'"WebInspector"' in data or b'"Firefox"' in data:
