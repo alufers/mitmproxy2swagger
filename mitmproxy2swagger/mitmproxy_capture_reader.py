@@ -19,7 +19,13 @@ def mitmproxy_dump_file_huristic(file_path: str) -> int:
     with open(file_path, "rb") as f:
         data = f.read(2048)
         # if file contains non-ascii characters after remove EOL characters
-        if data.decode("utf-8", "ignore").replace("\r", "").replace("\n", "").isprintable() is False:
+        if (
+            data.decode("utf-8", "ignore")
+            .replace("\r", "")
+            .replace("\n", "")
+            .isprintable()
+            is False
+        ):
             val += 50
         # if first character of the byte array is a digit
         if data[0:1].decode("utf-8", "ignore").isdigit() is True:
