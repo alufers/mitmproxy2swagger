@@ -11,23 +11,21 @@ def har_archive_heuristic(file_path: str) -> int:
     val = 0
     # if has the har extension
     if file_path.endswith(".har"):
-        val += 15
+        val += 25
     # read the first 2048 bytes
     with open(file_path, "rb") as f:
         data = f.read(2048)
-        # if file contains only ascii characters
-        if data.decode("utf-8", "ignore").isprintable() is True:
+        # if file contains only ascii characters after remove EOL characters
+        if data.decode("utf-8", "ignore").replace("\r", "").replace("\n", "").isprintable() is True:
             val += 25
-        # if first character is a '{'
-        if data[0] == "{":
+        # sign of a JSON file 
+        if data[0:1] == b'{':
             val += 23
-        # if it contains the word '"WebInspector"'
-        if b'"WebInspector"' in data:
+        # sign of Chrome OR Firefox export
+        if b'"WebInspector"' in data or b'"Firefox"' in data:
             val += 15
-        # if it contains the word '"entries"'
         if b'"entries"' in data:
             val += 15
-        # if it contains the word '"version"'
         if b'"version"' in data:
             val += 15
     return val
