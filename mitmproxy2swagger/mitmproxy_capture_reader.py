@@ -18,11 +18,11 @@ def mitmproxy_dump_file_huristic(file_path: str) -> int:
     # read the first 2048 bytes
     with open(file_path, "rb") as f:
         data = f.read(2048)
-        # if file contains non-ascii characters
-        if data.decode("utf-8", "ignore").isprintable() is False:
+        # if file contains non-ascii characters after remove EOL characters
+        if data.decode("utf-8", "ignore").replace("\r", "").replace("\n", "").isprintable() is False:
             val += 50
         # if first character of the byte array is a digit
-        if str(data[0]).isdigit() is True:
+        if data[0:1].decode("utf-8", "ignore").isdigit() is True:
             val += 5
         # if it contains the word status_code
         if b"status_code" in data:
