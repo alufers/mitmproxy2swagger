@@ -744,13 +744,13 @@ i18n = ["Babel (>=2.7)"]
 
 [[package]]
 name = "json-stream"
-version = "2.3.1"
+version = "2.3.2"
 description = "Streaming JSON encoder and decoder"
 optional = false
 python-versions = "<4,>=3.5"
 files = [
-    {file = "json-stream-2.3.1.tar.gz", hash = "sha256:5c36fb544be702c71a6b081364fb5b1a3128d63541223c3e864f50be6e4eecea"},
-    {file = "json_stream-2.3.1-py3-none-any.whl", hash = "sha256:abd2b68934806191aa2d8ca8201a408db832499404a6950895885e8536594dc9"},
+    {file = "json-stream-2.3.2.tar.gz", hash = "sha256:b8b450ea8e8e3c239e9e7e38d12fed934e77a353c14b297f8ee345a5ceb25b91"},
+    {file = "json_stream-2.3.2-py3-none-any.whl", hash = "sha256:236b8e08e2761b209816452a3527355e757913d833e6802b68a034a13b8bd3ac"},
 ]
 
 [package.dependencies]
