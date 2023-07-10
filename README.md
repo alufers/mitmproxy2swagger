@@ -1,7 +1,7 @@
 # mitmproxy2swagger
 
 [![PyPI version](https://badge.fury.io/py/mitmproxy2swagger.svg)](https://badge.fury.io/py/mitmproxy2swagger)
-[![Arch Linux repository](https://img.shields.io/badge/archlinux-mitmproxy2swagger-blue)](https://archlinux.org/packages/community/any/mitmproxy2swagger/)
+[![Arch Linux repository](https://img.shields.io/badge/archlinux-mitmproxy2swagger-blue)](https://archlinux.org/packages/extra/any/mitmproxy2swagger/)
 
 <https://user-images.githubusercontent.com/5400940/168086818-c48f60ab-3f95-42eb-b435-c8b1a6326b81.mp4>
 
