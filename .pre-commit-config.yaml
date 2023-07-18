@@ -16,7 +16,7 @@ repos:
       - id: check-merge-conflict
       - id: check-added-large-files
   - repo: https://github.com/psf/black
-    rev: 23.3.0
+    rev: 23.7.0
     hooks:
       - id: black
         args: [--config=pyproject.toml]
@@ -29,7 +29,7 @@ repos:
     hooks:
       - id: mypy
   - repo: https://github.com/PyCQA/docformatter
-    rev: v1.7.4
+    rev: v1.7.5
     hooks:
       - id: docformatter
         args:
