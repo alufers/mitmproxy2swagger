@@ -70,7 +70,7 @@ To create a specification by inspecting HTTP traffic you will need to:
 
    For example if an app has made requests like these:
 
-   ```
+   ```http
    https://api.example.com/v1/login
    https://api.example.com/v1/users/2
    https://api.example.com/v1/users/2/profile
