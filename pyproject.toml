@@ -7,10 +7,10 @@ readme = "README.md"
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.9"
-mitmproxy = "^9.0.1"
-"ruamel.yaml" = "^0.17.21"
-json-stream = "^2.2.0"
+python = "^3.10"
+mitmproxy = "^10.0.0"
+"ruamel.yaml" = "^0.17.32"
+json-stream = "^2.3.2"
 
 
 [tool.poetry.group.dev.dependencies]
