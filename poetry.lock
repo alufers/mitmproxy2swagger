@@ -874,14 +874,14 @@ format = ["fqdn", "idna", "isoduration", "jsonpointer (>1.13)", "rfc3339-validat
 format-nongpl = ["fqdn", "idna", "isoduration", "jsonpointer (>1.13)", "rfc3339-validator", "rfc3986-validator (>0.1.0)", "uri-template", "webcolors (>=1.11)"]
 
 [[package]]
-name = "jsonschema-spec"
-version = "0.2.4"
+name = "jsonschema-path"
+version = "0.3.1"
 description = "JSONSchema Spec with object-oriented paths"
 optional = false
 python-versions = ">=3.8.0,<4.0.0"
 files = [
-    {file = "jsonschema_spec-0.2.4-py3-none-any.whl", hash = "sha256:e6dcf7056734ec6854f7888da6c08ce6c421f28aeeddce96bb90de0fb6d711ef"},
-    {file = "jsonschema_spec-0.2.4.tar.gz", hash = "sha256:873e396ad1ba6edf9f52d6174c110d4fafb7b5f5894744246a53fe75e5251ec2"},
+    {file = "jsonschema_path-0.3.1-py3-none-any.whl", hash = "sha256:06f01b1848a28963f49a17730e11204d252aa6ff5db4ef84ec77e5ac93cfa831"},
+    {file = "jsonschema_path-0.3.1.tar.gz", hash = "sha256:07ea584b5c9b41a614b4d011c5575955676f48d0abbfd93d9ea8e933018d716d"},
 ]
 
 [package.dependencies]
@@ -1289,18 +1289,18 @@ rfc3339-validator = "*"
 
 [[package]]
 name = "openapi-spec-validator"
-version = "0.7.0"
+version = "0.7.1"
 description = "OpenAPI 2.0 (aka Swagger) and OpenAPI 3 spec validator"
 optional = false
 python-versions = ">=3.8.0,<4.0.0"
 files = [
-    {file = "openapi_spec_validator-0.7.0-py3-none-any.whl", hash = "sha256:09c1cb83e00537bffdef81a98648869220f7ab03a32981460e0777bc80d63eb8"},
-    {file = "openapi_spec_validator-0.7.0.tar.gz", hash = "sha256:03e8cbff36e1cab573e0e2fb51eff3d677f88aba33985d0fffe8753512595f1c"},
+    {file = "openapi_spec_validator-0.7.1-py3-none-any.whl", hash = "sha256:3c81825043f24ccbcd2f4b149b11e8231abce5ba84f37065e14ec947d8f4e959"},
+    {file = "openapi_spec_validator-0.7.1.tar.gz", hash = "sha256:8577b85a8268685da6f8aa30990b83b7960d4d1117e901d451b5d572605e5ec7"},
 ]
 
 [package.dependencies]
 jsonschema = ">=4.18.0,<5.0.0"
-jsonschema-spec = ">=0.2.3,<0.3.0"
+jsonschema-path = ">=0.3.1,<0.4.0"
 lazy-object-proxy = ">=1.7.1,<2.0.0"
 openapi-schema-validator = ">=0.6.0,<0.7.0"
 
