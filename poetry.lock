@@ -2,20 +2,23 @@
 
 [[package]]
 name = "aioquic-mitmproxy"
-version = "0.9.20.3"
+version = "0.9.21.1"
 description = "Fork of aioquic (https://github.com/aiortc/aioquic) with adjustments for mitmproxy."
 optional = false
-python-versions = "*"
+python-versions = ">=3.8"
 files = [
-    {file = "aioquic_mitmproxy-0.9.20.3-py3-none-any.whl", hash = "sha256:0c1d2d52444d28c118f2004d3116e05563f1f499d0983177a2ebec4945653c05"},
-    {file = "aioquic_mitmproxy-0.9.20.3.tar.gz", hash = "sha256:a1ea39e34432c3d1216358e773d416d07717cdda86445909c1e23aec75dd5d75"},
+    {file = "aioquic_mitmproxy-0.9.21.1-py3-none-any.whl", hash = "sha256:4c691232cc97f7c01c1677f21e2457523ee6780c4b5ad7d7936f6a3210d4f886"},
+    {file = "aioquic_mitmproxy-0.9.21.1.tar.gz", hash = "sha256:0da539b95982dd02d1f971344215da5c15d0c409e2639d267a2815cd27335e26"},
 ]
 
 [package.dependencies]
 certifi = "*"
-cryptography = ">=3.1"
 pylsqpack = ">=0.3.3,<0.4.0"
-pyopenssl = ">=20"
+pyopenssl = ">=22"
+service-identity = ">=23.1.0"
+
+[package.extras]
+dev = ["coverage[toml] (>=7.2.2)"]
 
 [[package]]
 name = "asgiref"
@@ -1056,83 +1059,82 @@ files = [
 
 [[package]]
 name = "mitmproxy"
-version = "10.1.1"
+version = "10.1.4"
 description = "An interactive, SSL/TLS-capable intercepting proxy for HTTP/1, HTTP/2, and WebSockets."
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "mitmproxy-10.1.1-py3-none-any.whl", hash = "sha256:32472bd030e8d6e0393908be3be030cdc8f4e39d6064f77616c3ae3fc57da5ba"},
+    {file = "mitmproxy-10.1.4-py3-none-any.whl", hash = "sha256:42aaa7d8b1624f1616e5799114b983bbe1a975dc6b7b2e9d59fab9ebd38b4aed"},
 ]
 
 [package.dependencies]
-aioquic-mitmproxy = ">=0.9.20,<0.10"
+aioquic-mitmproxy = ">=0.9.21,<0.10"
 asgiref = ">=3.2.10,<3.8"
-Brotli = ">=1.0,<1.1"
+Brotli = ">=1.0,<1.2"
 certifi = ">=2019.9.11"
 cryptography = ">=38.0,<41.1"
-flask = ">=1.1.1,<2.4"
+flask = ">=1.1.1,<3.1"
 h11 = ">=0.11,<0.15"
 h2 = ">=4.1,<5"
 hyperframe = ">=6.0,<7"
 kaitaistruct = ">=0.10,<0.11"
 ldap3 = ">=2.8,<2.10"
-mitmproxy-rs = ">=0.3.6,<0.4"
+mitmproxy-rs = ">=0.4,<0.5"
 msgpack = ">=1.0.0,<1.1.0"
 passlib = ">=1.6.5,<1.8"
 protobuf = ">=3.14,<5"
 publicsuffix2 = ">=2.20190812,<3"
 pydivert = {version = ">=2.0.3,<2.2", markers = "sys_platform == \"win32\""}
-pyOpenSSL = ">=22.1,<23.3"
+pyOpenSSL = ">=22.1,<23.4"
 pyparsing = ">=2.4.2,<3.2"
 pyperclip = ">=1.6.0,<1.9"
-"ruamel.yaml" = ">=0.16,<0.18"
+"ruamel.yaml" = ">=0.16,<0.19"
 sortedcontainers = ">=2.3,<2.5"
 tornado = ">=6.2,<7"
 typing-extensions = {version = ">=4.3,<5", markers = "python_version < \"3.11\""}
 urwid-mitmproxy = ">=2.1.1,<2.2"
 wsproto = ">=1.0,<1.3"
-zstandard = ">=0.11,<0.22"
+zstandard = ">=0.11,<0.23"
 
 [package.extras]
-dev = ["build (>=0.10.0)", "click (>=7.0,<8.2)", "hypothesis (>=5.8,<7)", "pdoc (>=4.0.0)", "pyinstaller (==5.13.2)", "pytest (>=6.1.0,<8)", "pytest-asyncio (>=0.17,<0.22)", "pytest-cov (>=2.7.1,<4.2)", "pytest-timeout (>=1.3.3,<2.2)", "pytest-xdist (>=2.1.0,<3.4)", "requests (>=2.9.1,<3)", "tox (>=3.5,<5)", "wheel (>=0.36.2,<0.42)"]
+dev = ["build (>=0.10.0)", "click (>=7.0,<8.2)", "hypothesis (>=5.8,<7)", "pdoc (>=4.0.0)", "pyinstaller (==6.1.0)", "pytest (>=6.1.0,<8)", "pytest-asyncio (>=0.17,<0.22)", "pytest-cov (>=2.7.1,<4.2)", "pytest-timeout (>=1.3.3,<2.3)", "pytest-xdist (>=2.1.0,<3.4)", "requests (>=2.9.1,<3)", "tox (>=3.5,<5)", "wheel (>=0.36.2,<0.42)"]
 
 [[package]]
 name = "mitmproxy-macos"
-version = "0.3.11"
+version = "0.4.1"
 description = ""
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "mitmproxy_macos-0.3.11-py3-none-any.whl", hash = "sha256:2a4ef01387c8413e79d123c1de08de6db443fe5a11a3d786833915823a120285"},
-    {file = "mitmproxy_macos-0.3.11.tar.gz", hash = "sha256:b521a0cd29ff85ec5ff26f5dee5fc0e221e0968c3904e3bce3cddcd930b0b5c7"},
+    {file = "mitmproxy_macos-0.4.1-py3-none-any.whl", hash = "sha256:3720561fc8788f2ac71a063780dfb28e3353f216f978b04f8a0aa865835af97b"},
 ]
 
 [[package]]
 name = "mitmproxy-rs"
-version = "0.3.11"
+version = "0.4.1"
 description = ""
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "mitmproxy_rs-0.3.11-cp310-abi3-macosx_10_9_x86_64.macosx_11_0_arm64.macosx_10_9_universal2.whl", hash = "sha256:56ff6d7276bc0cd41f645ec0a25483a503d9fa6ee0f4638fee7a48dfbf5f6da8"},
-    {file = "mitmproxy_rs-0.3.11-cp310-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:956e38041439e956cb7b7b9b1a986a2d6983a58d38a38f4b2b41539cc1814dc3"},
-    {file = "mitmproxy_rs-0.3.11-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:6a18d5e4280f055ce62ab99605ba3ecb2f245e41d17fa466255c9d611ac61acc"},
-    {file = "mitmproxy_rs-0.3.11-cp310-abi3-win_amd64.whl", hash = "sha256:7c966c8e4752f9114544c270355a9f3a2a191579fbc837729ef280cf0b29327d"},
-    {file = "mitmproxy_rs-0.3.11.tar.gz", hash = "sha256:5dddb1360dbfc659e13616ed62797ca6c7cfabdcc03674da75a2851c6044eecd"},
+    {file = "mitmproxy_rs-0.4.1-cp310-abi3-macosx_10_9_x86_64.macosx_11_0_arm64.macosx_10_9_universal2.whl", hash = "sha256:8674af6f9be7c1d26508f355322d3ce6a33f344eacefef403e0784bb10941054"},
+    {file = "mitmproxy_rs-0.4.1-cp310-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:e70adbcb0bd4d4c9a5ada99dc720747f9ab2c10357c1350b02e064466d77760c"},
+    {file = "mitmproxy_rs-0.4.1-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:f5da094d204ccca4b76f5db25c69ee34f8ad1aa9ac5e14ed72b8a91a6b8bcddd"},
+    {file = "mitmproxy_rs-0.4.1-cp310-abi3-win_amd64.whl", hash = "sha256:037f627ae08ca62af50e62e8915b6563a3a8b55313e5aa2266406a0a27b19092"},
+    {file = "mitmproxy_rs-0.4.1.tar.gz", hash = "sha256:179bc584a771ec39c16b3a87bde7faffa3872137aad477173ad4435b49ef855e"},
 ]
 
 [package.dependencies]
-mitmproxy_macos = {version = "0.3.11", markers = "sys_platform == \"darwin\""}
-mitmproxy_windows = {version = "0.3.11", markers = "os_name == \"nt\""}
+mitmproxy_macos = {version = "0.4.1", markers = "sys_platform == \"darwin\""}
+mitmproxy_windows = {version = "0.4.1", markers = "os_name == \"nt\""}
 
 [[package]]
 name = "mitmproxy-windows"
-version = "0.3.11"
+version = "0.4.1"
 description = ""
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "mitmproxy_windows-0.3.11-py3-none-any.whl", hash = "sha256:6d381fe39ddb2c72aeb1c7ca9968c06046b2caab85534f6a45ba0a8c50afb74e"},
+    {file = "mitmproxy_windows-0.4.1-py3-none-any.whl", hash = "sha256:1a9c8e024d1b2e5544cc81bfb95bf2e713260191e64523e1c5b3bef98ad960ab"},
 ]
 
 [[package]]
@@ -1445,6 +1447,20 @@ files = [
     {file = "pyasn1-0.5.0-py2.py3-none-any.whl", hash = "sha256:87a2121042a1ac9358cabcaf1d07680ff97ee6404333bacca15f76aa8ad01a57"},
     {file = "pyasn1-0.5.0.tar.gz", hash = "sha256:97b7290ca68e62a832558ec3976f15cbf911bf5d7c7039d8b861c2a0ece69fde"},
 ]
+
+[[package]]
+name = "pyasn1-modules"
+version = "0.3.0"
+description = "A collection of ASN.1-based protocols modules"
+optional = false
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,>=2.7"
+files = [
+    {file = "pyasn1_modules-0.3.0-py2.py3-none-any.whl", hash = "sha256:d3ccd6ed470d9ffbc716be08bd90efbd44d0734bc9303818f7336070984a162d"},
+    {file = "pyasn1_modules-0.3.0.tar.gz", hash = "sha256:5bd01446b736eb9d31512a30d46c1ac3395d676c6f3cafa4c03eb54b9925631c"},
+]
+
+[package.dependencies]
+pyasn1 = ">=0.4.6,<0.6.0"
 
 [[package]]
 name = "pycodestyle"
@@ -1931,6 +1947,30 @@ files = [
     {file = "ruamel.yaml.clib-0.2.7-cp39-cp39-win_amd64.whl", hash = "sha256:184faeaec61dbaa3cace407cffc5819f7b977e75360e8d5ca19461cd851a5fc5"},
     {file = "ruamel.yaml.clib-0.2.7.tar.gz", hash = "sha256:1f08fd5a2bea9c4180db71678e850b995d2a5f4537be0e94557668cf0f5f9497"},
 ]
+
+[[package]]
+name = "service-identity"
+version = "23.1.0"
+description = "Service identity verification for pyOpenSSL & cryptography."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "service_identity-23.1.0-py3-none-any.whl", hash = "sha256:87415a691d52fcad954a500cb81f424d0273f8e7e3ee7d766128f4575080f383"},
+    {file = "service_identity-23.1.0.tar.gz", hash = "sha256:ecb33cd96307755041e978ab14f8b14e13b40f1fbd525a4dc78f46d2b986431d"},
+]
+
+[package.dependencies]
+attrs = ">=19.1.0"
+cryptography = "*"
+pyasn1 = "*"
+pyasn1-modules = "*"
+
+[package.extras]
+dev = ["pyopenssl", "service-identity[docs,idna,mypy,tests]"]
+docs = ["furo", "myst-parser", "pyopenssl", "sphinx", "sphinx-notfound-page"]
+idna = ["idna"]
+mypy = ["idna", "mypy", "types-pyopenssl"]
+tests = ["coverage[toml] (>=5.0.2)", "pytest"]
 
 [[package]]
 name = "setuptools"
