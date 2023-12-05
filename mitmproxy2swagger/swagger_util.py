@@ -111,22 +111,22 @@ def response_to_headers(headers):
 
 def value_to_schema(value):
     # check if value is a number
-    if type(value) == int or type(value) == float:
+    if isinstance(value, (int, float)):
         return {"type": "number"}
     # check if value is a boolean
-    elif type(value) == bool:
+    elif isinstance(value, bool):
         return {"type": "boolean"}
     # check if value is a string
-    elif type(value) == str:
+    elif isinstance(value, str):
         return {"type": "string"}
     # check if value is a list
-    elif type(value) == list:
+    elif isinstance(value, list):
         if len(value) == 0:
             return {"type": "array", "items": {}}
 
         return {"type": "array", "items": value_to_schema(value[0])}
     # check if value is a dict
-    elif type(value) == dict:
+    elif isinstance(value, dict):
         return {
             "type": "object",
             "properties": {key: value_to_schema(value[key]) for key in value},
@@ -142,14 +142,14 @@ MAX_EXAMPLE_OBJECT_PROPERTIES = 150
 
 # recursively scan an example value and limit the number of elements and properties
 def limit_example_size(example):
-    if type(example) == list:
+    if isinstance(example, list):
         new_list = []
         for element in example:
             if len(new_list) >= MAX_EXAMPLE_ARRAY_ELEMENTS:
                 break
             new_list.append(limit_example_size(element))
         return new_list
-    elif type(example) == dict:
+    elif isinstance(example, dict):
         new_dict = {}
         for key in example:
             if len(new_dict) >= MAX_EXAMPLE_OBJECT_PROPERTIES:
