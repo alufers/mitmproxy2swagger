@@ -9,7 +9,7 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.10"
 mitmproxy = "^10.1.1"
-"ruamel.yaml" = "^0.17.32"
+"ruamel.yaml" = ">=0.17.32,<0.19.0"
 json-stream = "^2.3.2"
 
 
