@@ -3,6 +3,7 @@
 """Converts a mitmproxy dump file to a swagger schema."""
 import argparse
 import json
+import msgpack
 import os
 import re
 import sys
@@ -240,6 +241,15 @@ def main(override_args: Optional[Sequence[str]] = None):
                         pass
                     except json.decoder.JSONDecodeError:
                         pass
+
+                    # try to parse the body as msgpack
+                    try:
+                        body_val = msgpack.loads(req.get_request_body())
+                        content_type = "application/msgpack"
+                    except Exception as e:
+                        pass
+
+
                     if content_type is None:
                         # try to parse the body as form data
                         try:
@@ -278,28 +288,37 @@ def main(override_args: Optional[Sequence[str]] = None):
                             content_to_set,
                         )
 
-            # try parsing the response as json
             response_body = req.get_response_body()
             if response_body is not None:
+                # try parsing the response as json
                 try:
-                    response_json = json.loads(response_body)
+                    response_parsed = json.loads(response_body)
+                    response_content_type = "application/json"
                 except UnicodeDecodeError:
-                    response_json = None
+                    response_parsed = None
                 except json.decoder.JSONDecodeError:
-                    response_json = None
-                if response_json is not None:
+                    response_parsed = None
+
+                # try parsing the response as msgpack
+                try:
+                    response_parsed = msgpack.loads(response_body)
+                    response_content_type = "application/msgpack"
+                except Exception as e:
+                    response_parsed = None
+
+                if response_parsed is not None:
                     resp_data_to_set = {
                         "description": req.get_response_reason(),
                         "content": {
-                            "application/json": {
-                                "schema": swagger_util.value_to_schema(response_json)
+                            response_content_type: {
+                                "schema": swagger_util.value_to_schema(response_parsed)
                             }
                         },
                     }
                     if args.examples:
-                        resp_data_to_set["content"]["application/json"][
+                        resp_data_to_set["content"][response_content_type][
                             "example"
-                        ] = swagger_util.limit_example_size(response_json)
+                        ] = swagger_util.limit_example_size(response_parsed)
                     if args.headers:
                         resp_data_to_set["headers"] = swagger_util.response_to_headers(
                             req.get_response_headers()
@@ -310,6 +329,7 @@ def main(override_args: Optional[Sequence[str]] = None):
                         str(status),
                         resp_data_to_set,
                     )
+
             if (
                 "responses" in swagger["paths"][path_template_to_set][method]
                 and len(swagger["paths"][path_template_to_set][method]["responses"])
