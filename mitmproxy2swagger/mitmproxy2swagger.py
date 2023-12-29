@@ -242,12 +242,13 @@ def main(override_args: Optional[Sequence[str]] = None):
                     except json.decoder.JSONDecodeError:
                         pass
 
-                    # try to parse the body as msgpack
-                    try:
-                        body_val = msgpack.loads(req.get_request_body())
-                        content_type = "application/msgpack"
-                    except Exception:
-                        pass
+                    # try to parse the body as msgpack, if it's not json
+                    if body_val is None:
+                        try:
+                            body_val = msgpack.loads(req.get_request_body())
+                            content_type = "application/msgpack"
+                        except Exception:
+                            pass
 
                     if content_type is None:
                         # try to parse the body as form data
@@ -298,12 +299,13 @@ def main(override_args: Optional[Sequence[str]] = None):
                 except json.decoder.JSONDecodeError:
                     response_parsed = None
 
-                # try parsing the response as msgpack
-                try:
-                    response_parsed = msgpack.loads(response_body)
-                    response_content_type = "application/msgpack"
-                except Exception:
-                    response_parsed = None
+                if response_parsed is None:
+                    # try parsing the response as msgpack, if it's not json
+                    try:
+                        response_parsed = msgpack.loads(response_body)
+                        response_content_type = "application/msgpack"
+                    except Exception:
+                        response_parsed = None
 
                 if response_parsed is not None:
                     resp_data_to_set = {
