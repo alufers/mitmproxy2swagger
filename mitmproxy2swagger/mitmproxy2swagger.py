@@ -3,7 +3,6 @@
 """Converts a mitmproxy dump file to a swagger schema."""
 import argparse
 import json
-import msgpack
 import os
 import re
 import sys
@@ -11,6 +10,7 @@ import traceback
 import urllib
 from typing import Any, Optional, Sequence, Union
 
+import msgpack
 import ruamel.yaml
 from mitmproxy.exceptions import FlowReadException
 
@@ -246,9 +246,8 @@ def main(override_args: Optional[Sequence[str]] = None):
                     try:
                         body_val = msgpack.loads(req.get_request_body())
                         content_type = "application/msgpack"
-                    except Exception as e:
+                    except Exception:
                         pass
-
 
                     if content_type is None:
                         # try to parse the body as form data
@@ -303,7 +302,7 @@ def main(override_args: Optional[Sequence[str]] = None):
                 try:
                     response_parsed = msgpack.loads(response_body)
                     response_content_type = "application/msgpack"
-                except Exception as e:
+                except Exception:
                     response_parsed = None
 
                 if response_parsed is not None:
