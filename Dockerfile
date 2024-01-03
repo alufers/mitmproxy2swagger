@@ -2,6 +2,9 @@ FROM python:3.10-alpine as base
 ENV PYTHONFAULTHANDLER=1 \
     PYTHONHASHSEED=random \
     PYTHONUNBUFFERED=1
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache libgcc
 FROM python:3.10-alpine AS builder
 ENV PIP_DEFAULT_TIMEOUT=100 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
@@ -23,4 +26,6 @@ FROM base AS final
 WORKDIR /app
 COPY --from=builder /venv /venv
 ENV PATH="/venv/bin:${PATH}"
-CMD [ "mitmproxy2swagger" ]
+# CMD [ "mitmproxy2swagger" ]
+
+ENTRYPOINT [ "mitmproxy2swagger" ]
