@@ -15,7 +15,17 @@ class GenericKeysHandler(http.server.BaseHTTPRequestHandler):
             print(raw_data)
             data = json.loads(raw_data)
 
-            data["789"] = {
+            data["numeric"]["0000"] = {
+                "lorem": "ipsum",
+                "dolor": "sit",
+                "amet": "consectetur",
+            }
+            data["uuid"]["123e4567-e89b-12d3-a456-426614174002"] = {
+                "lorem": "ipsum",
+                "dolor": "sit",
+                "amet": "consectetur",
+            }
+            data["mixed"]["0000"] = {
                 "lorem": "ipsum",
                 "dolor": "sit",
                 "amet": "consectetur",
