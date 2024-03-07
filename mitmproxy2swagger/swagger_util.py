@@ -130,7 +130,7 @@ def value_to_schema(value):
         all_keys_are_generic = all(
             isinstance(key, str) and key.isnumeric() for key in value
         )
-        if all_keys_are_generic:
+        if all_keys_are_generic and len(value) > 0:
             return {
                 "type": "object",
                 "additionalProperties": value_to_schema(list(value.values())[0]),
