@@ -127,6 +127,14 @@ def value_to_schema(value):
         return {"type": "array", "items": value_to_schema(value[0])}
     # check if value is a dict
     elif isinstance(value, dict):
+        all_keys_are_generic = all(
+            isinstance(key, str) and key.isnumeric() for key in value
+        )
+        if all_keys_are_generic:
+            return {
+                "type": "object",
+                "additionalProperties": value_to_schema(list(value.values())[0]),
+            }
         return {
             "type": "object",
             "properties": {key: value_to_schema(value[key]) for key in value},
