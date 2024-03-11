@@ -18,7 +18,7 @@ msgpack = "^1.0.7"
 black = "^23.1.0"
 isort = "^5.12.0"
 mypy = "^1.0.1"
-flake8 = "^6.0.0"
+flake8 = ">=6,<8"
 docformatter = {extras = ["tomli"], version = "^1.7.1"}
 flake8-pyproject = "^1.2.2"
 pre-commit = "^3.1.1"
