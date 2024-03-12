@@ -88,7 +88,7 @@ def test_mitmproxy2swagger_generates_swagger_from_mitmproxy_flow_file_with_gener
     assert (
         get_nested_key(
             data,
-            "paths./.post.responses.200.content.application/json.schemar.properties.numeric.additionalProperties",
+            "paths./.post.responses.200.content.application/json.schema.properties.numeric.additionalProperties",
         )
         is not None
     )
