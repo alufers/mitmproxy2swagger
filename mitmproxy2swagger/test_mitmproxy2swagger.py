@@ -53,6 +53,62 @@ def test_mitmproxy2swagger_generates_swagger_from_mitmproxy_flow_file_with_form_
     )
 
 
+def test_mitmproxy2swagger_generates_swagger_from_mitmproxy_flow_file_with_generic_keys():
+    data = mitmproxy2swagger_e2e_test(
+        "testdata/generic_keys_flows",
+        "http://localhost:8082/",
+        [
+            "--format",
+            "flow",
+        ],
+    )
+    assert data is not None
+
+    assert (
+        get_nested_key(
+            data,
+            "paths./.post.responses.200.content.application/json.schema.properties.numeric.properties",
+        )
+        is None
+    )
+    assert (
+        get_nested_key(
+            data,
+            "paths./.post.responses.200.content.application/json.schema.properties.uuid.properties",
+        )
+        is None
+    )
+    assert (
+        get_nested_key(
+            data,
+            "paths./.post.responses.200.content.application/json.schema.properties.numeric.additionalProperties",
+        )
+        is not None
+    )
+    assert (
+        get_nested_key(
+            data,
+            "paths./.post.responses.200.content.application/json.schema.properties.numeric.additionalProperties",
+        )
+        is not None
+    )
+
+    assert (
+        get_nested_key(
+            data,
+            "paths./.post.responses.200.content.application/json.schema.properties.mixed.properties",
+        )
+        is not None
+    )
+    assert (
+        get_nested_key(
+            data,
+            "paths./.post.responses.200.content.application/json.schema.properties.mixed.additionalProperties",
+        )
+        is None
+    )
+
+
 def test_mitmproxy2swagger_generates_headers_for_flow_files():
     data = mitmproxy2swagger_e2e_test(
         "testdata/form_data_flows",

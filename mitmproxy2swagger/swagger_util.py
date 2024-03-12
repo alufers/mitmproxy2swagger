@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import urllib
+import uuid
 from typing import Any, List
 
 VERBS = [
@@ -127,6 +128,15 @@ def value_to_schema(value):
         return {"type": "array", "items": value_to_schema(value[0])}
     # check if value is a dict
     elif isinstance(value, dict):
+        all_keys_are_numeric = all(is_numeric_string(key) for key in value)
+        all_keys_are_uuid = all(is_uuid(key) for key in value)
+        keys_are_generic = all_keys_are_numeric or all_keys_are_uuid
+
+        if keys_are_generic and len(value) > 0:
+            return {
+                "type": "object",
+                "additionalProperties": value_to_schema(list(value.values())[0]),
+            }
         return {
             "type": "object",
             "properties": {key: value_to_schema(value[key]) for key in value},
@@ -134,6 +144,22 @@ def value_to_schema(value):
     # if it is none, return null
     elif value is None:
         return {"type": "object"}
+
+
+def is_uuid(key):
+    return isinstance(key, str) and is_valid_uuid(key)
+
+
+def is_numeric_string(key):
+    return isinstance(key, str) and key.isnumeric()
+
+
+def is_valid_uuid(val):
+    try:
+        uuid.UUID(str(val))
+        return True
+    except ValueError:
+        return False
 
 
 MAX_EXAMPLE_ARRAY_ELEMENTS = 10
