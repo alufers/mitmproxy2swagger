@@ -71,3 +71,17 @@ def test_mitmproxy2swagger_compliance_from_msgpack_file_with_headers():
     )
     assert data is not None
     validate_spec(data)
+
+
+def test_mitmproxy2swagger_compliance_from_generic_keys_file_with_headers():
+    data = mitmproxy2swagger_e2e_test(
+        "testdata/generic_keys_flows",
+        "http://localhost:8082/",
+        [
+            "--format",
+            "flow",
+            "--headers",
+        ],
+    )
+    assert data is not None
+    validate_spec(data)
