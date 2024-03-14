@@ -12,7 +12,7 @@ ENV PIP_DEFAULT_TIMEOUT=100 \
 WORKDIR /app
 RUN apk update && \
     apk upgrade && \
-    apk add gcc libc-dev libffi-dev cargo alpine-sdk bsd-compat-headers && \
+    apk add gcc libc-dev libffi-dev cargo alpine-sdk bsd-compat-headers openssl-dev python3-dev && \
     python -m pip install --upgrade pip && \
     pip install poetry
 RUN python -m venv /venv
