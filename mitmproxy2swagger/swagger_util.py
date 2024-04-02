@@ -143,11 +143,7 @@ def value_to_schema(value):
         }
     # if it is none, return null
     elif value is None:
-        return {
-            "type": "object",
-            "nullable": True
-        }
-
+        return {"type": "object", "nullable": True}
 
 
 def is_uuid(key):
