@@ -112,7 +112,7 @@ def response_to_headers(headers):
 
 def value_to_schema(value):
     # check if value is a number
-    if isinstance(value, (int, float)):
+    if type(value) is int or type(value) is float:
         return {"type": "number"}
     # check if value is a boolean
     elif isinstance(value, bool):
@@ -143,7 +143,7 @@ def value_to_schema(value):
         }
     # if it is none, return null
     elif value is None:
-        return {"type": "object"}
+        return {"type": "object", "nullable": True}
 
 
 def is_uuid(key):
