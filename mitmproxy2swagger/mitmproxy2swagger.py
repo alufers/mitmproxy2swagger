@@ -262,7 +262,11 @@ def main(override_args: Optional[Sequence[str]] = None):
                             did_find_anything = False
                             for key, value in body_val_bytes.items():
                                 did_find_anything = True
-                                body_val[key.decode("utf-8")] = value.decode("utf-8")
+                                if type(key) != str:
+                                    key = key.decode("utf-8")
+                                if type(value) != str:
+                                    value = value.decode("utf-8")
+                                body_val[key] = value
                             if did_find_anything:
                                 content_type = "application/x-www-form-urlencoded"
                             else:
