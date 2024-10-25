@@ -29,7 +29,9 @@ repos:
     hooks:
       - id: mypy
   - repo: https://github.com/PyCQA/docformatter
-    rev: v1.7.5
+    rev: eb1df347edd128b30cd3368dddc3aa65edcfac38
+    # TODO: Switch back to upstream docformatter
+    # after https://github.com/PyCQA/docformatter/issues/289 is fixed
     hooks:
       - id: docformatter
         args:
