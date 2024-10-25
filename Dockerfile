@@ -5,7 +5,7 @@ ENV PYTHONFAULTHANDLER=1 \
 RUN apk update && \
     apk upgrade && \
     apk add --no-cache libgcc
-FROM python:3.10-alpine AS builder
+FROM python:3.12-alpine AS builder
 ENV PIP_DEFAULT_TIMEOUT=100 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PIP_NO_CACHE_DIR=1
