@@ -3,7 +3,7 @@
 exclude: ^(api_protobuf/.*|docs/protobuf_docs\.md|dhaul_openapi/messages/.*)$
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v5.0.0
     hooks:
       - id: check-yaml
       - id: end-of-file-fixer
@@ -16,7 +16,7 @@ repos:
       - id: check-merge-conflict
       - id: check-added-large-files
   - repo: https://github.com/psf/black
-    rev: 23.12.1
+    rev: 24.10.0
     hooks:
       - id: black
         args: [--config=pyproject.toml]
@@ -25,7 +25,7 @@ repos:
     hooks:
       - id: isort
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.8.0"
+    rev: "v1.13.0"
     hooks:
       - id: mypy
   - repo: https://github.com/PyCQA/docformatter
@@ -36,15 +36,14 @@ repos:
           - --in-place
           - --config=pyproject.toml
   - repo: https://github.com/PyCQA/autoflake
-    rev: v2.2.1
+    rev: v2.3.1
     hooks:
       - id: autoflake
   - repo: https://github.com/pycqa/flake8
-    rev: 6.1.0
+    rev: 7.1.1
     hooks:
       - id: flake8
-        entry: pflake8
-        additional_dependencies: [pyproject-flake8]
+        entry: flake8
   - repo: https://github.com/netromdk/vermin
     rev: v1.6.0
     hooks:
@@ -53,11 +52,11 @@ repos:
         args: ["-t=3.9-", "--violations"]
         # (if your target is specified in a Vermin config, you may omit the 'args' entry entirely)
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.33.0
+    rev: v1.35.1
     hooks:
       - id: yamllint
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.38.0
+    rev: v0.42.0
     hooks:
       - id: markdownlint-fix
       - id: markdownlint

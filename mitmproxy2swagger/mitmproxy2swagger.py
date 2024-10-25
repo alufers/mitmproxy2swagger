@@ -279,9 +279,9 @@ def main(override_args: Optional[Sequence[str]] = None):
                             }
                         }
                         if args.examples:
-                            content_to_set["content"][content_type][
-                                "example"
-                            ] = swagger_util.limit_example_size(body_val)
+                            content_to_set["content"][content_type]["example"] = (
+                                swagger_util.limit_example_size(body_val)
+                            )
                         set_key_if_not_exists(
                             swagger["paths"][path_template_to_set][method],
                             "requestBody",
