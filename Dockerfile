@@ -1,31 +1,24 @@
-FROM python:3.12-alpine as base
+FROM python:3.12-slim-bookworm AS builder
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+ENV UV_HTTP_TIMEOUT=100 \
+    UV_NO_CACHE=1
+WORKDIR /app
+RUN uv pip install --system poetry poetry-plugin-export
+COPY pyproject.toml poetry.lock ./
+RUN uv venv /venv && \
+    poetry config warnings.export false && \
+    poetry export -f requirements.txt -o requirements.txt && \
+    VIRTUAL_ENV=/venv uv pip install -r requirements.txt
+COPY . .
+RUN poetry build && \
+    VIRTUAL_ENV=/venv uv pip install dist/*.whl
+
+FROM python:3.12-slim-bookworm AS final
 ENV PYTHONFAULTHANDLER=1 \
     PYTHONHASHSEED=random \
     PYTHONUNBUFFERED=1
-RUN apk update && \
-    apk upgrade && \
-    apk add --no-cache libgcc
-FROM python:3.12-alpine AS builder
-ENV PIP_DEFAULT_TIMEOUT=100 \
-    PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    PIP_NO_CACHE_DIR=1
-WORKDIR /app
-RUN apk update && \
-    apk upgrade && \
-    apk add gcc libc-dev libffi-dev cargo alpine-sdk bsd-compat-headers openssl-dev python3-dev && \
-    python -m pip install --upgrade pip && \
-    pip install poetry
-RUN python -m venv /venv
-COPY ["pyproject.toml", "./"]
-COPY ["poetry.lock", "./"]
-RUN poetry export -f requirements.txt | /venv/bin/pip install -r /dev/stdin
-COPY . .
-RUN poetry build && /venv/bin/pip install dist/*.whl
-
-FROM base AS final
 WORKDIR /app
 COPY --from=builder /venv /venv
 ENV PATH="/venv/bin:${PATH}"
-# CMD [ "mitmproxy2swagger" ]
 
 ENTRYPOINT [ "mitmproxy2swagger" ]
