@@ -50,6 +50,7 @@ jobs:
           RELEASE_TYPE: ${{ github.event.inputs.release-type }}
       - name: Build package
         run: |
+          poetry lock
           poetry build
       - name: Commit pyproject.toml and poetry.lock
         run: |
