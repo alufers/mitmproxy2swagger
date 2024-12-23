@@ -25,11 +25,11 @@ repos:
     hooks:
       - id: isort
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.13.0"
+    rev: "v1.14.0"
     hooks:
       - id: mypy
   - repo: https://github.com/PyCQA/docformatter
-    rev: eb1df347edd128b30cd3368dddc3aa65edcfac38
+    rev: v1.7.5
     # TODO: Switch back to upstream docformatter
     # after https://github.com/PyCQA/docformatter/issues/289 is fixed
     hooks:
@@ -58,7 +58,7 @@ repos:
     hooks:
       - id: yamllint
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.42.0
+    rev: v0.43.0
     hooks:
       - id: markdownlint-fix
       - id: markdownlint
