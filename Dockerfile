@@ -21,4 +21,3 @@ COPY --from=builder /venv /venv
 ENV PATH="/venv/bin:${PATH}"
 
 ENTRYPOINT [ "mitmproxy2swagger" ]
-
