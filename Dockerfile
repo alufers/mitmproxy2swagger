@@ -6,7 +6,6 @@ WORKDIR /app
 RUN uv pip install --system poetry poetry-plugin-export
 COPY pyproject.toml poetry.lock ./
 RUN uv venv /venv && \
-    poetry config warnings.export false && \
     poetry export -f requirements.txt -o requirements.txt && \
     VIRTUAL_ENV=/venv uv pip install -r requirements.txt
 COPY . .
