@@ -226,7 +226,9 @@ def main(override_args: Optional[Sequence[str]] = None):
 
             if len(all_params) > 0:
                 set_key_if_not_exists(
-                    swagger["paths"][path_template_to_set][method], "parameters", all_params
+                    swagger["paths"][path_template_to_set][method],
+                    "parameters",
+                    all_params,
                 )
 
             if method not in ["get", "head"]:
