@@ -3,7 +3,7 @@
 exclude: ^(api_protobuf/.*|docs/protobuf_docs\.md|dhaul_openapi/messages/.*)$
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: check-yaml
       - id: end-of-file-fixer
@@ -15,21 +15,21 @@ repos:
       - id: fix-encoding-pragma
       - id: check-merge-conflict
       - id: check-added-large-files
-  - repo: https://github.com/psf/black
-    rev: 24.10.0
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 26.5.0
     hooks:
       - id: black
         args: [--config=pyproject.toml]
   - repo: https://github.com/PyCQA/isort
-    rev: 5.13.2
+    rev: 9.0.0a3
     hooks:
       - id: isort
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.13.0"
+    rev: "v2.1.0"
     hooks:
       - id: mypy
   - repo: https://github.com/PyCQA/docformatter
-    rev: eb1df347edd128b30cd3368dddc3aa65edcfac38
+    rev: v1.7.8
     # TODO: Switch back to upstream docformatter
     # after https://github.com/PyCQA/docformatter/issues/289 is fixed
     hooks:
@@ -38,27 +38,27 @@ repos:
           - --in-place
           - --config=pyproject.toml
   - repo: https://github.com/PyCQA/autoflake
-    rev: v2.3.1
+    rev: v2.3.3
     hooks:
       - id: autoflake
   - repo: https://github.com/pycqa/flake8
-    rev: 7.1.1
+    rev: 7.3.0
     hooks:
       - id: flake8
         entry: flake8
   - repo: https://github.com/netromdk/vermin
-    rev: v1.6.0
+    rev: v1.8.0
     hooks:
       - id: vermin
         # specify your target version here, OR in a Vermin config file as usual:
         args: ["-t=3.9-", "--violations"]
         # (if your target is specified in a Vermin config, you may omit the 'args' entry entirely)
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.35.1
+    rev: v1.38.0
     hooks:
       - id: yamllint
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.42.0
+    rev: v0.48.0
     hooks:
       - id: markdownlint-fix
       - id: markdownlint
