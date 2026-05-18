@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Converts a mitmproxy dump file to a swagger schema."""
+
 import argparse
 import json
 import os
