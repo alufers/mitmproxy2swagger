@@ -60,6 +60,7 @@ class HarFlowWrapper:
             # create list on key if it does not exist
             headers[k] = headers.get(k, [])
             headers[k].append(v)
+        return headers
 
     def get_request_body(self):
         if (

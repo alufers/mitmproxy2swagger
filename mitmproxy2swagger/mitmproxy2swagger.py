@@ -215,19 +215,20 @@ def main(override_args: Sequence[str] | None = None):
             )
 
             params = swagger_util.url_to_params(url, path_template_to_set)
+            all_params = []
             if args.headers:
                 headers_request = swagger_util.request_to_headers(
                     req.get_request_headers()
                 )
                 if headers_request is not None and len(headers_request) > 0:
-                    set_key_if_not_exists(
-                        swagger["paths"][path_template_to_set][method],
-                        "parameters",
-                        headers_request + (params or []),
-                    )
+                    all_params.extend(headers_request)
             if params is not None and len(params) > 0:
+                all_params.extend(params)
+            if len(all_params) > 0:
                 set_key_if_not_exists(
-                    swagger["paths"][path_template_to_set][method], "parameters", params
+                    swagger["paths"][path_template_to_set][method],
+                    "parameters",
+                    all_params,
                 )
 
             if method not in ["get", "head"]:
@@ -264,9 +265,9 @@ def main(override_args: Sequence[str] | None = None):
                             did_find_anything = False
                             for key, value in body_val_bytes.items():
                                 did_find_anything = True
-                                if type(key) != str:
+                                if isinstance(key, bytes):
                                     key = key.decode("utf-8")
-                                if type(value) != str:
+                                if isinstance(value, bytes):
                                     value = value.decode("utf-8")
                                 body_val[key] = value
                             if did_find_anything:

@@ -141,6 +141,24 @@ def test_mitmproxy2swagger_generates_headers_for_flow_files():
     )
 
 
+def test_mitmproxy2swagger_includes_both_headers_and_query_params_with_hd_flag():
+    # Regression test for https://github.com/alufers/mitmproxy2swagger/pull/220
+    # With --headers, query params were dropped; without it, headers were dropped
+    data = mitmproxy2swagger_e2e_test(
+        "testdata/headers_and_params_har.har",
+        "https://httpbin.org/",
+        ["--headers"],
+    )
+    assert data is not None
+
+    parameters = get_nested_key(data, "paths./get.get.parameters")
+    assert parameters is not None
+
+    param_names = [p["name"] for p in parameters]
+    assert "X-Api-Key" in param_names, "Request header missing from parameters"
+    assert "search" in param_names, "Query parameter missing from parameters"
+
+
 def test_mitmproxy2swagger_parses_msgpack_requests_and_responses():
     data = mitmproxy2swagger_e2e_test(
         "testdata/msgpack_flows",
