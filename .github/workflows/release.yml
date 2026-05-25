@@ -22,39 +22,36 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
         with:
-          python-version: "3.12"
-      - name: Install poetry
-        uses: abatilo/actions-poetry@v2
-        with:
-          poetry-version: "1.8.5"
+          version: "latest"
       - name: Install dependencies
         run: |
-          poetry install
+          uv sync
       - name: Run Python lint checks
         run: |
-          poetry run pre-commit run --all-files
+          uv run pre-commit run --all-files
       - name: Run Python tests
         run: |
-          poetry run pytest --cov
+          uv run pytest --cov
       - name: Git configuration
         run: |
           git config --global user.email "bot@example.com"
           git config --global user.name "GitHub Actions"
       - name: Bump release version
         run: |
-          poetry version ${{ github.event.inputs.release-type }}
-          echo "NEW_VERSION=$(poetry version --short)" >> $GITHUB_ENV
+          uvx hatch version ${{ github.event.inputs.release-type }}
+          echo "NEW_VERSION=$(uvx hatch version)" >> $GITHUB_ENV
         env:
           RELEASE_TYPE: ${{ github.event.inputs.release-type }}
       - name: Build package
         run: |
-          poetry lock
-          poetry build
-      - name: Commit pyproject.toml and poetry.lock
+          uv lock
+          uv build
+      - name: Commit pyproject.toml and uv.lock
         run: |
-          git add pyproject.toml poetry.lock
+          git add pyproject.toml uv.lock
           git commit -m "chore: release ${{ env.NEW_VERSION }}"
           git tag ${{ env.NEW_VERSION }}
           git push origin master
@@ -69,9 +66,9 @@ jobs:
       # Push repository changes
       - name: Publish package
         run: |
-          poetry publish --build
+          uv publish
         env:
-          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
       - name: Push docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:

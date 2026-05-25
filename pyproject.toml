@@ -1,45 +1,43 @@
-[tool.poetry]
+[project]
 name = "mitmproxy2swagger"
 version = "0.14.0"
 description = ""
-authors = ["alufers <alufers@wp.pl>"]
+authors = [{name = "alufers", email = "alufers@wp.pl"}]
 readme = "README.md"
-license = "MIT"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+dependencies = [
+    "mitmproxy>=11.0.2,<12",
+    "ruamel.yaml>=0.17.32,<0.19.0",
+    "json-stream>=2.3.2,<3",
+    "msgpack>=1.0.7,<2",
+]
 
-[tool.poetry.dependencies]
-python = "^3.10"
-mitmproxy = "^11.0.2"
-"ruamel.yaml" = ">=0.17.32,<0.19.0"
-json-stream = "^2.3.2"
-msgpack = "^1.0.7"
+[project.scripts]
+mitmproxy2swagger = "mitmproxy2swagger.mitmproxy2swagger:main"
 
-
-[tool.poetry.group.dev.dependencies]
-black = "^24.10.0"
-isort = "^5.12.0"
-mypy = "^1.13.0"
-flake8 = "^7.1.1"
-docformatter = {extras = ["tomli"], version = "^1.7.1"}
-pre-commit = "^4.0.1"
-pytest = "^8.3.3"
-pytest-asyncio = ">=0.20.3,<0.25.0"
-vermin = "^1.5.1"
-openapi-spec-validator = ">=0.5.6,<0.8.0"
-pytest-cov = "^6.0.0"
+[dependency-groups]
+dev = [
+    "black>=24.10.0,<25",
+    "isort>=5.12.0,<6",
+    "mypy>=1.13.0,<2",
+    "flake8>=7.1.1,<8",
+    "docformatter[tomli]>=1.7.1,<2",
+    "pre-commit>=4.0.1,<5",
+    "pytest>=8.3.3,<9",
+    "pytest-asyncio>=0.20.3,<0.25.0",
+    "vermin>=1.5.1,<2",
+    "openapi-spec-validator>=0.5.6,<0.8.0",
+    "pytest-cov>=6.0.0,<7",
+]
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-
-[tool.poetry.scripts]
-mitmproxy2swagger = 'mitmproxy2swagger.mitmproxy2swagger:main'
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.black]
 line-length = 88
 target-version = ['py310']
-
-
-
 
 [tool.isort]
 profile = "black"

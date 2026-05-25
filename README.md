@@ -129,14 +129,14 @@ See the generated html file [here](https://raw.githack.com/alufers/mitmproxy2swa
 
 This project uses:
 
-- [poetry](https://python-poetry.org/) for dependency management
+- [uv](https://docs.astral.sh/uv/) for dependency management
 - [pre-commit](https://pre-commit.com/) for code formatting and linting
 - [pytest](https://docs.pytest.org/en/stable/) for unit testing
 
 To install the dependencies:
 
 ```bash
-poetry install
+uv sync
 ```
 
 Run linters:
@@ -154,13 +154,13 @@ pre-commit install
 Run tests:
 
 ```bash
-poetry run pytest
+uv run pytest
 ```
 
 Run tests with coverage:
 
 ```bash
-poetry run pytest --cov=mitmproxy2swagger
+uv run pytest --cov=mitmproxy2swagger
 ```
 
 ## License

@@ -1,17 +1,13 @@
 FROM python:3.12-slim-bookworm AS builder
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 ENV UV_HTTP_TIMEOUT=100 \
-    UV_NO_CACHE=1
+    UV_NO_CACHE=1 \
+    UV_PROJECT_ENVIRONMENT=/venv
 WORKDIR /app
-RUN uv pip install --system poetry poetry-plugin-export
-COPY pyproject.toml poetry.lock ./
-RUN uv venv /venv && \
-    poetry config warnings.export false && \
-    poetry export -f requirements.txt -o requirements.txt && \
-    VIRTUAL_ENV=/venv uv pip install -r requirements.txt
+COPY pyproject.toml uv.lock ./
+RUN uv sync --no-dev --frozen --no-install-project
 COPY . .
-RUN poetry build && \
-    VIRTUAL_ENV=/venv uv pip install dist/*.whl
+RUN uv sync --no-dev --frozen
 
 FROM python:3.12-slim-bookworm AS final
 ENV PYTHONFAULTHANDLER=1 \
