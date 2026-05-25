@@ -50,6 +50,24 @@ def test_mitmproxy2swagger_generates_swagger_from_mitmproxy_flow_file_with_form_
     )
 
 
+def test_mitmproxy2swagger_generates_swagger_from_har_file_with_form_data():
+    # Regression test for https://github.com/alufers/mitmproxy2swagger/pull/174
+    # HAR bodies are already decoded strings; calling .decode() on them raised AttributeError
+    data = mitmproxy2swagger_e2e_test(
+        "testdata/form_data_har.har",
+        "https://httpbin.org/",
+    )
+    assert data is not None
+
+    assert (
+        get_nested_key(
+            data,
+            "paths./post.post.requestBody.content.application/x-www-form-urlencoded.schema",
+        )
+        is not None
+    )
+
+
 def test_mitmproxy2swagger_generates_swagger_from_mitmproxy_flow_file_with_generic_keys():
     data = mitmproxy2swagger_e2e_test(
         "testdata/generic_keys_flows",
