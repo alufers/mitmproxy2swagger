@@ -4,7 +4,7 @@ on:
     inputs:
       release-type:
         type: choice
-        description: 'Release type (one of): patch, minor, major, prepatch, preminor, premajor, prerelease'
+        description: 'Release type (one of): patch, minor, major'
         default: 'patch'
         options:
           - 'patch'
@@ -12,29 +12,27 @@ on:
           - 'major'
         required: true
 
+permissions:
+  contents: write
+  packages: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      # Checkout project repository
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Set up Python 3.14
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.14"
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v8
         with:
           version: "latest"
       - name: Install dependencies
-        run: |
-          uv sync
-      - name: Run Python lint checks
-        run: |
-          uv run prek run --all-files
+        run: uv sync
       - name: Run Python tests
-        run: |
-          uv run pytest --cov
+        run: uv run pytest --cov
       - name: Git configuration
         run: |
           git config --global user.email "bot@example.com"
@@ -43,9 +41,7 @@ jobs:
         run: |
           uvx hatch version ${{ github.event.inputs.release-type }}
           echo "NEW_VERSION=$(uvx hatch version)" >> $GITHUB_ENV
-        env:
-          RELEASE_TYPE: ${{ github.event.inputs.release-type }}
-      - name: Build package
+      - name: Update lock file and build package
         run: |
           uv lock
           uv build
@@ -54,26 +50,25 @@ jobs:
           git add pyproject.toml uv.lock
           git commit -m "chore: release ${{ env.NEW_VERSION }}"
           git tag ${{ env.NEW_VERSION }}
-          git push origin master
-      - name: Build docker image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
-        with:
-          context: .
-          push: false
-          platforms: linux/amd64
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-      # Push repository changes
-      - name: Publish package
-        run: |
-          uv publish
+          git push origin master --follow-tags
+      - name: Publish package to PyPI
+        run: uv publish
         env:
           UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
-      - name: Push docker image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+      - name: Log in to the Container registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v7
         with:
           context: .
-          push: false
+          push: true
           platforms: linux/amd64
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: |
+            ghcr.io/${{ github.repository }}:${{ env.NEW_VERSION }}
+            ghcr.io/${{ github.repository }}:latest
