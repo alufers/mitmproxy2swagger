@@ -1,6 +1,6 @@
 [project]
 name = "mitmproxy2swagger"
-version = "0.14.0"
+version = "0.15.0"
 description = ""
 authors = [{name = "alufers", email = "alufers@wp.pl"}]
 readme = "README.md"
