@@ -430,7 +430,7 @@ def main(override_args: Optional[Sequence[str]] = None):
         "Remove the ignore: prefix to generate an endpoint with its URL\nLines that are closer to the top take precedence, the matching is greedy"
     )
     # save the swagger file
-    with open(args.output, "w") as f:
+    with open(args.output, "w", encoding="utf-8") as f:
         yaml.dump(swagger, f)
     print("Done!")
 
