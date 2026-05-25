@@ -9,6 +9,20 @@ from mitmproxy import io as iom
 from mitmproxy.exceptions import FlowReadException
 
 
+def has_non_printable_sampled(file_path: str, sample_size=2048, samples=3) -> bool:
+    file_size = os.path.getsize(file_path)
+    chunk_offsets = [int(file_size * i / samples) for i in range(samples)]
+
+    with open(file_path, "rb") as f:
+        for offset in chunk_offsets:
+            f.seek(offset)
+            data = f.read(sample_size)
+            text = data.decode("utf-8", "ignore").replace("\r", "").replace("\n", "")
+            if not text.isprintable():
+                return True
+    return False
+
+
 def mitmproxy_dump_file_huristic(file_path: str) -> int:
     val = 0
     if "flow" in file_path:
@@ -19,13 +33,7 @@ def mitmproxy_dump_file_huristic(file_path: str) -> int:
     with open(file_path, "rb") as f:
         data = f.read(2048)
         # if file contains non-ascii characters after remove EOL characters
-        if (
-            data.decode("utf-8", "ignore")
-            .replace("\r", "")
-            .replace("\n", "")
-            .isprintable()
-            is False
-        ):
+        if has_non_printable_sampled(file_path):
             val += 50
         # if first character of the byte array is a digit
         if data[0:1].decode("utf-8", "ignore").isdigit() is True:
