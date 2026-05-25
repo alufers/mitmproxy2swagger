@@ -33,8 +33,8 @@ jobs:
           git config --global user.name "GitHub Actions"
       - name: Bump release version
         run: |
-          uvx hatch version ${{ github.event.inputs.release-type }}
-          echo "NEW_VERSION=$(uvx hatch version)" >> $GITHUB_ENV
+          uv version --bump ${{ github.event.inputs.release-type }}
+          echo "NEW_VERSION=$(uv version --short)" >> $GITHUB_ENV
       - name: Update lock file and build package
         run: |
           uv lock
