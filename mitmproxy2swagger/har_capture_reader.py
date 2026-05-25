@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 import os
 from base64 import b64decode
-from typing import Iterator, Union
+from collections.abc import Iterator
 
 import json_stream
 
@@ -44,7 +43,7 @@ class HarFlowWrapper:
     def get_url(self):
         return self.flow["request"]["url"]
 
-    def get_matching_url(self, prefix) -> Union[str, None]:
+    def get_matching_url(self, prefix) -> str | None:
         """Get the requests URL if the prefix matches the URL, None otherwise."""
         if self.flow["request"]["url"].startswith(prefix):
             return self.flow["request"]["url"]
@@ -112,7 +111,7 @@ class HarCaptureReader:
 
     def captured_requests(self) -> Iterator[HarFlowWrapper]:
         har_file_size = os.path.getsize(self.file_path)
-        with open(self.file_path, "r", encoding="utf-8") as f:
+        with open(self.file_path, encoding="utf-8") as f:
             data = json_stream.load(f)
             for entry in data["log"]["entries"].persistent():
                 if self.progress_callback:

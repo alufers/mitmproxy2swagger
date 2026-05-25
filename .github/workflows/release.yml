@@ -18,12 +18,12 @@ jobs:
     steps:
       # Checkout project repository
       - uses: actions/checkout@v4
-      - name: Set up Python 3.12
+      - name: Set up Python 3.14
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.14"
       - name: Install uv
-        uses: astral-sh/setup-uv@v4
+        uses: astral-sh/setup-uv@v6
         with:
           version: "latest"
       - name: Install dependencies
@@ -31,7 +31,7 @@ jobs:
           uv sync
       - name: Run Python lint checks
         run: |
-          uv run pre-commit run --all-files
+          uv run prek run --all-files
       - name: Run Python tests
         run: |
           uv run pytest --cov

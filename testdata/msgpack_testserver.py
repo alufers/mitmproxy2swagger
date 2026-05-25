@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import msgpack
 from testserver import TestServerHandler, launchServerWith
 

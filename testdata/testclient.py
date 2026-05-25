@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
-from typing import Any, Callable
+from collections.abc import Callable
+from typing import Any
 
-import requests  # type: ignore
+import requests
 
 
 def testclient(

@@ -123,14 +123,14 @@ To create a specification by inspecting HTTP traffic you will need to:
 
 See the [examples](./example_outputs/). You will find a generated schema there and an html file with the generated documentation (via [redoc-cli](https://www.npmjs.com/package/redoc-cli)).
 
-See the generated html file [here](https://raw.githack.com/alufers/mitmproxy2swagger/master/example_outputs/lisek-static.html).
+See the [generated html file](https://raw.githack.com/alufers/mitmproxy2swagger/master/example_outputs/lisek-static.html).
 
 ## Development and contributing
 
 This project uses:
 
 - [uv](https://docs.astral.sh/uv/) for dependency management
-- [pre-commit](https://pre-commit.com/) for code formatting and linting
+- [prek](https://github.com/j178/prek) for code formatting and linting
 - [pytest](https://docs.pytest.org/en/stable/) for unit testing
 
 To install the dependencies:
@@ -142,13 +142,13 @@ uv sync
 Run linters:
 
 ```bash
-pre-commit run --all-files
+uv run prek run --all-files
 ```
 
-Install pre-commit hooks:
+Install prek hooks:
 
 ```bash
-pre-commit install
+uv run prek install
 ```
 
 Run tests:

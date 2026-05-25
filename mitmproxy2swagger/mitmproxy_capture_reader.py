@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 import os
-import typing
-from typing import Iterator
+from collections.abc import Iterator
 from urllib.parse import urlparse
 
 from mitmproxy import http
@@ -53,7 +51,7 @@ class MitmproxyFlowWrapper:
     def get_url(self) -> str:
         return self.flow.request.url
 
-    def get_matching_url(self, prefix) -> typing.Union[str, None]:
+    def get_matching_url(self, prefix) -> str | None:
         """Get the requests URL if the prefix matches the URL, None otherwise.
 
         This takes into account a quirk of mitmproxy where it sometimes
@@ -82,8 +80,8 @@ class MitmproxyFlowWrapper:
     def get_method(self) -> str:
         return self.flow.request.method
 
-    def get_request_headers(self) -> dict[str, typing.List[str]]:
-        headers: dict[str, typing.List[str]] = {}
+    def get_request_headers(self) -> dict[str, list[str]]:
+        headers: dict[str, list[str]] = {}
         for k, v in self.flow.request.headers.items(multi=True):
             # create list on key if it does not exist
             headers[k] = headers.get(k, [])
@@ -93,22 +91,27 @@ class MitmproxyFlowWrapper:
     def get_request_body(self):
         return self.flow.request.content
 
+    @property
+    def _response(self) -> http.Response:
+        assert self.flow.response is not None
+        return self.flow.response
+
     def get_response_status_code(self):
-        return self.flow.response.status_code
+        return self._response.status_code
 
     def get_response_reason(self):
-        return self.flow.response.reason
+        return self._response.reason
 
     def get_response_headers(self):
         headers = {}
-        for k, v in self.flow.response.headers.items(multi=True):
+        for k, v in self._response.headers.items(multi=True):
             # create list on key if it does not exist
             headers[k] = headers.get(k, [])
             headers[k].append(v)
         return headers
 
     def get_response_body(self):
-        return self.flow.response.content
+        return self._response.content
 
 
 class MitmproxyCaptureReader:
@@ -126,9 +129,7 @@ class MitmproxyCaptureReader:
                         self.progress_callback(logfile.tell() / logfile_size)
                     if isinstance(f, http.HTTPFlow):
                         if f.response is None:
-                            print(
-                                "[warn] flow without response: {}".format(f.request.url)
-                            )
+                            print(f"[warn] flow without response: {f.request.url}")
                             continue
                         yield MitmproxyFlowWrapper(f)
             except FlowReadException as e:

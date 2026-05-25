@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 import http.server
 import socketserver
-from typing import Type
 
 
 class TestServerHandler(http.server.BaseHTTPRequestHandler):
@@ -18,7 +16,7 @@ class TestServerHandler(http.server.BaseHTTPRequestHandler):
             # Send the response
             self.send_response(200)
             self.send_header("Content-type", self.headers["Content-type"])
-            self.send_header("Content-length", len(modified_data))
+            self.send_header("Content-length", str(len(modified_data)))
             self.end_headers()
             self.wfile.write(modified_data)
 
@@ -33,7 +31,7 @@ class TestServerHandler(http.server.BaseHTTPRequestHandler):
         raise NotImplementedError("Subclasses must implement this method")
 
 
-def launchServerWith(handler: Type[TestServerHandler]):
+def launchServerWith(handler: type[TestServerHandler]):
     PORT = 8082
     with socketserver.TCPServer(("", PORT), handler) as httpd:
         print(f"Serving on port {PORT}")

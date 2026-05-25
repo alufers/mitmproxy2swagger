@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
-
 import tempfile
-from typing import Any, List, Optional
+from typing import Any
 
 import ruamel.yaml as ruamel
 
@@ -21,11 +19,13 @@ def get_nested_key(obj: Any, path: str) -> Any:
 
 
 def mitmproxy2swagger_e2e_test(
-    input_file: str, url_prefix: str, extra_args: Optional[List[str]] = None
+    input_file: str, url_prefix: str, extra_args: list[str] | None = None
 ) -> Any:
     """Runs mitmproxy2swagger on the given input file twice, and returns the detected
     endpoints."""
-    yaml_tmp_path = tempfile.mktemp(suffix=".yaml", prefix="sklep.lisek.")
+    yaml_tmp_path = tempfile.NamedTemporaryFile(
+        suffix=".yaml", prefix="sklep.lisek.", delete=False
+    ).name
     main(
         [
             "-i",
@@ -41,7 +41,7 @@ def mitmproxy2swagger_e2e_test(
 
     data = None
     # try to parse the file
-    with open(yaml_tmp_path, "r") as f:
+    with open(yaml_tmp_path) as f:
         data = yaml.load(f.read())
     assert data is not None
     assert "x-path-templates" in data
@@ -69,6 +69,6 @@ def mitmproxy2swagger_e2e_test(
     )
 
     # load the file again
-    with open(yaml_tmp_path, "r") as f:
+    with open(yaml_tmp_path) as f:
         data = yaml.load(f.read())
     return data

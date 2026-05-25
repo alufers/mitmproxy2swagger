@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """Converts a mitmproxy dump file to a swagger schema."""
+
 import argparse
 import json
 import os
@@ -8,7 +8,9 @@ import re
 import sys
 import traceback
 import urllib
-from typing import Any, Optional, Sequence, Union
+import urllib.parse
+from collections.abc import Sequence
+from typing import Any
 
 import msgpack
 import ruamel.yaml
@@ -56,7 +58,7 @@ def detect_input_format(file_path):
     return MitmproxyCaptureReader(file_path, progress_callback)
 
 
-def main(override_args: Optional[Sequence[str]] = None):
+def main(override_args: Sequence[str] | None = None):
     parser = argparse.ArgumentParser(
         description="Converts a mitmproxy dump file or HAR to a swagger schema."
     )
@@ -115,7 +117,7 @@ def main(override_args: Optional[Sequence[str]] = None):
 
     yaml = ruamel.yaml.YAML()
 
-    capture_reader: Union[MitmproxyCaptureReader, HarCaptureReader]
+    capture_reader: MitmproxyCaptureReader | HarCaptureReader
     if args.format == "flow" or args.format == "mitmproxy":
         capture_reader = MitmproxyCaptureReader(args.input, progress_callback)
     elif args.format == "har":
@@ -130,7 +132,7 @@ def main(override_args: Optional[Sequence[str]] = None):
         base_dir = os.getcwd()
         relative_path = args.output
         abs_path = os.path.join(base_dir, relative_path)
-        with open(abs_path, "r") as f:
+        with open(abs_path) as f:
             swagger = yaml.load(f)
     except FileNotFoundError:
         print("No existing swagger file found. Creating new one.")

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from openapi_spec_validator import validate_spec
 
 from mitmproxy2swagger.testing_util import mitmproxy2swagger_e2e_test

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import msgpack
 from testclient import testclient
 

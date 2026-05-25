@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 from .testing_util import get_nested_key, mitmproxy2swagger_e2e_test
 
 

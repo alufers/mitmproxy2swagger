@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
 import urllib
+import urllib.parse
 import uuid
-from typing import Any, List
+from typing import Any
 
 VERBS = [
     "add",
@@ -81,7 +81,7 @@ def url_to_params(url, path_template):
     return params
 
 
-def request_to_headers(headers: dict[str, List[Any]], add_example: bool = False):
+def request_to_headers(headers: dict[str, list[Any]], add_example: bool = False):
     """When given an url and its path template, generates the parameters section of the
     request."""
     params = []

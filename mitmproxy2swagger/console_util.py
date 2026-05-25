@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import sys
 
 ANSI_RGB = "\033[38;2;{};{};{}m"
@@ -64,5 +63,5 @@ def print_progress_bar(progress=0.0):
             progress_bar_contents += " "
 
     progress_bar_contents += ANSI_RESET
-    sys.stdout.write("[{}] {:.1f}%".format(progress_bar_contents, progress * 100))
+    sys.stdout.write(f"[{progress_bar_contents}] {progress * 100:.1f}%")
     sys.stdout.flush()

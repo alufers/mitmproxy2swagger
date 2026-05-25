@@ -5,10 +5,10 @@ description = ""
 authors = [{name = "alufers", email = "alufers@wp.pl"}]
 readme = "README.md"
 license = {text = "MIT"}
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 dependencies = [
-    "mitmproxy>=11.0.2,<12",
-    "ruamel.yaml>=0.17.32,<0.19.0",
+    "mitmproxy>=12.2.3",
+    "ruamel.yaml>=0.17.32",
     "json-stream>=2.3.2,<3",
     "msgpack>=1.0.7,<2",
 ]
@@ -18,36 +18,26 @@ mitmproxy2swagger = "mitmproxy2swagger.mitmproxy2swagger:main"
 
 [dependency-groups]
 dev = [
-    "black>=24.10.0,<25",
-    "isort>=5.12.0,<6",
-    "mypy>=1.13.0,<2",
-    "flake8>=7.1.1,<8",
-    "docformatter[tomli]>=1.7.1,<2",
-    "pre-commit>=4.0.1,<5",
+    "ruff>=0.15.14",
+    "ty>=0.0.39",
     "pytest>=8.3.3,<9",
     "pytest-asyncio>=0.20.3,<0.25.0",
-    "vermin>=1.5.1,<2",
     "openapi-spec-validator>=0.5.6,<0.8.0",
     "pytest-cov>=6.0.0,<7",
+    "prek>=0.4.1",
 ]
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
-[tool.black]
+[tool.ruff]
 line-length = 88
-target-version = ['py310']
+target-version = "py310"
 
-[tool.isort]
-profile = "black"
-
-[tool.mypy]
-python_version = "3.10"
-
-[tool.docformatter]
-recursive = true
-wrap-summaries = 88
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP"]
+ignore = ["E501"]
 
 [tool.pytest.ini_options]
 asyncio_default_fixture_loop_scope = "function"
