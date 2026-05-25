@@ -1,4 +1,4 @@
-from openapi_spec_validator import validate_spec
+from openapi_spec_validator import validate
 
 from mitmproxy2swagger.testing_util import mitmproxy2swagger_e2e_test
 
@@ -13,7 +13,7 @@ def test_mitmproxy2swagger_compliance_from_mitmproxy_flow_file():
         ],
     )
     assert data is not None
-    validate_spec(data)
+    validate(data)
 
 
 def test_mitmproxy2swagger_compliance_from_mitmproxy_flow_file_with_headers():
@@ -27,7 +27,7 @@ def test_mitmproxy2swagger_compliance_from_mitmproxy_flow_file_with_headers():
         ],
     )
     assert data is not None
-    validate_spec(data)
+    validate(data)
 
 
 def test_mitmproxy2swagger_compliance_from_har_file_with_headers():
@@ -41,7 +41,7 @@ def test_mitmproxy2swagger_compliance_from_har_file_with_headers():
         ],
     )
     assert data is not None
-    validate_spec(data)
+    validate(data)
 
 
 def test_mitmproxy2swagger_compliance_from_form_data_file_with_headers():
@@ -55,7 +55,7 @@ def test_mitmproxy2swagger_compliance_from_form_data_file_with_headers():
         ],
     )
     assert data is not None
-    validate_spec(data)
+    validate(data)
 
 
 def test_mitmproxy2swagger_compliance_from_msgpack_file_with_headers():
@@ -69,7 +69,7 @@ def test_mitmproxy2swagger_compliance_from_msgpack_file_with_headers():
         ],
     )
     assert data is not None
-    validate_spec(data)
+    validate(data)
 
 
 def test_mitmproxy2swagger_compliance_from_generic_keys_file_with_headers():
@@ -83,4 +83,4 @@ def test_mitmproxy2swagger_compliance_from_generic_keys_file_with_headers():
         ],
     )
     assert data is not None
-    validate_spec(data)
+    validate(data)

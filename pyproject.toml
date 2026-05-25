@@ -20,10 +20,10 @@ mitmproxy2swagger = "mitmproxy2swagger.mitmproxy2swagger:main"
 dev = [
     "ruff>=0.15.14",
     "ty>=0.0.39",
-    "pytest>=8.3.3,<9",
-    "pytest-asyncio>=0.20.3,<0.25.0",
-    "openapi-spec-validator>=0.5.6,<0.8.0",
-    "pytest-cov>=6.0.0,<7",
+    "pytest>=9.0.3",
+    "pytest-asyncio>=1.3.0",
+    "openapi-spec-validator>=0.9.0",
+    "pytest-cov>=7.1.0",
     "prek>=0.4.1",
 ]
 
@@ -41,3 +41,6 @@ ignore = ["E501"]
 
 [tool.pytest.ini_options]
 asyncio_default_fixture_loop_scope = "function"
+filterwarnings = [
+    "ignore::pyparsing.exceptions.PyparsingDeprecationWarning",
+]
