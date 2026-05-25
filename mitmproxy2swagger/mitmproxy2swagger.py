@@ -221,7 +221,7 @@ def main(override_args: Optional[Sequence[str]] = None):
                     set_key_if_not_exists(
                         swagger["paths"][path_template_to_set][method],
                         "parameters",
-                        headers_request,
+                        headers_request + (params or []),
                     )
             if params is not None and len(params) > 0:
                 set_key_if_not_exists(
