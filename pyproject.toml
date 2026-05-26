@@ -10,7 +10,7 @@ dependencies = [
     "mitmproxy>=12.2.3",
     "ruamel.yaml>=0.17.32",
     "json-stream>=2.3.2,<3",
-    "msgpack>=1.0.7,<2",
+    "msgpack>=1.1.2,<2",
 ]
 
 [project.scripts]
