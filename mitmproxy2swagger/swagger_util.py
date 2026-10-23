@@ -50,7 +50,7 @@ def path_template_to_endpoint_name(method, path_template):
 def url_to_params(url, path_template):
     path_template = path_template.strip("/")
     segments = path_template.split("/")
-    url_segments = url.split("?")[0].strip("/").split("/")
+    url_segments = urllib.parse.urlparse(url).path.strip("/").split("/")
     params = []
     for idx, segment in enumerate(segments):
         if segment.startswith("{") and segment.endswith("}"):
