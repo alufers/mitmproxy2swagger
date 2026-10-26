@@ -1,6 +1,9 @@
 name: Prek checks
 
 on: [push, pull_request]
+permissions:
+  contents: read
+
 
 jobs:
   prek:
